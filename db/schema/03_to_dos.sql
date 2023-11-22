@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS to_dos CASCADE;
+CREATE TABLE to_dos ();
