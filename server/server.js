@@ -2,7 +2,7 @@
 require('dotenv').config();
 
 // Web server config
-const sassMiddleware = require('./lib/sass-middleware');
+const sassMiddleware = require('../lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
 
@@ -28,9 +28,9 @@ app.use(express.static('public'));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const userApiRoutes = require('./routes/users-api');
-const widgetApiRoutes = require('./routes/widgets-api');
-const usersRoutes = require('./routes/users');
+const userApiRoutes = require('../routes/users-api');
+const widgetApiRoutes = require('../routes/widgets-api');
+const usersRoutes = require('../routes/users');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own

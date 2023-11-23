@@ -28,7 +28,7 @@ async function categorizeItem(itemName) {
 }
 
 async function main() {
-  const itemName = "Rubber duck"; // Replace with the actual item name
+  const itemName = "Sony headphones"; // Replace with the actual item name
   const suggestedCategory = await categorizeItem(itemName);
 
   console.log(`Suggested category for ${itemName}: ${suggestedCategory}`);
