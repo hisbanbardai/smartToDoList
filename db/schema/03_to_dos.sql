@@ -1,0 +1,13 @@
+DROP TABLE IF EXISTS to_dos CASCADE;
+CREATE TABLE to_dos (
+  id SERIAL PRIMARY KEY NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  category_id INTEGER REFERENCES categories(id) ON DELETE CASCADE,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  created_at TIMESTAMP NOT NULL,
+  due_date DATE,
+  completed_at TIMESTAMP,
+  is_complete BOOLEAN DEFAULT FALSE,
+  priority INTEGER,
+  tagged_user INTEGER REFERENCES users(id) ON DELETE CASCADE
+);
