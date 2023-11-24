@@ -17,7 +17,7 @@ app.set('view engine', 'ejs');
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(
-  '/styles',
+  '../styles',
   sassMiddleware({
     source: __dirname + '/styles',
     destination: __dirname + '/public/styles',
@@ -31,6 +31,7 @@ app.use(express.static('public'));
 const userApiRoutes = require('../routes/users-api');
 const widgetApiRoutes = require('../routes/widgets-api');
 const usersRoutes = require('../routes/users');
+const loginRoutes = require('../routes/login');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -38,6 +39,7 @@ const usersRoutes = require('../routes/users');
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
+app.use('/login', loginRoutes);
 // Note: mount other resources here, using the same pattern above
 
 // Home page
