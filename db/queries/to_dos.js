@@ -38,6 +38,38 @@ const getToDoById = (toDo_id) => {
     }));
 };
 
+const addToDo = (toDo) => {
+  const queryParams = [];
+  const keys = Object.keys(toDo);
+
+  let queryString = `INSERT INTO to_dos (
+    )
+    VALUES (`;
+
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    queryParams.push(property[key]);
+    queryString += `$${queryParams.length}`;
+
+    // Add to all values except for final value
+    if (i < keys.length - 1) {
+      queryString += `, `;
+    }
+  }
+
+  queryString += `)
+  RETURNING *;
+  `;
+
+  return db.query(queryString, queryParams)
+  .then((data) => {
+    return data.rows[0];
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+}
+
 module.exports = {
   getToDosByCategory,
   getToDoById
