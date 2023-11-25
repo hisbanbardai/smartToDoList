@@ -72,5 +72,6 @@ const addToDo = (toDo) => {
 
 module.exports = {
   getToDosByCategory,
-  getToDoById
+  getToDoById,
+  addToDo
  };
