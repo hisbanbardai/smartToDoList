@@ -38,4 +38,7 @@ const getToDoById = (toDo_id) => {
     }));
 };
 
-module.exports = { getToDosByCategory };
+module.exports = {
+  getToDosByCategory,
+  getToDoById
+ };
