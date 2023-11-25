@@ -23,4 +23,19 @@ const getToDosByCategory = (category_id) => {
     }));
 };
 
+const getToDoById = (toDo_id) => {
+  const queryString = `SELECT *
+  FROM to_dos
+  WHERE id = $1;`;
+  const queryParams = [toDo_id];
+
+  return db.query(queryString, queryParams)
+    .then(data => {
+      return data.rows;
+    })
+    .catch((err => {
+      console.log(err.message);
+    }));
+};
+
 module.exports = { getToDosByCategory };
