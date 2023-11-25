@@ -8,10 +8,12 @@ const db = require('../connection');
 // };
 
 const getToDosByCategory = (category) => {
-  return db.query(`
-  SELECT *
+  const queryString = `SELECT *
   FROM to_dos
-  WHERE category = ${category};`)
+  WHERE category_id = $1;`;
+  const queryParams = [category];
+
+  return db.query(queryString, queryParams)
     .then(data => {
       return data.rows;
     });
