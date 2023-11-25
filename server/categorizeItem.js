@@ -6,7 +6,7 @@ const openaiApiKey = process.env.OPENAI_APIKEY;
 
 const openai = new OpenAI({ apiKey: openaiApiKey });
 
-async function categorizeItem(itemName) {
+const categorizeItem = async function (itemName) {
   try {
     const completion = await openai.chat.completions.create({
       messages: [
@@ -17,25 +17,24 @@ async function categorizeItem(itemName) {
       ],
       model: "gpt-3.5-turbo",
     });
-    
+
     const suggestedCategory = completion.choices[0].message.content.trim();
-    
+
     return suggestedCategory;
   } catch (error) {
     console.error("OpenAI API Error:", error);
     throw new Error("Failed to categorize item");
   }
-}
+};
 
 async function main() {
-  const itemName = "Sony headphones"; // Replace with the actual item name
+  const itemName = "Sushi"; // Replace with the actual item name
   const suggestedCategory = await categorizeItem(itemName);
 
   console.log(`Suggested category for ${itemName}: ${suggestedCategory}`);
 }
 
 main();
-
 
 module.exports = categorizeItem;
 
