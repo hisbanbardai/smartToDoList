@@ -7,12 +7,12 @@ const db = require('../connection');
 //     });
 // };
 
-const getToDosByCategory = (categoryId) => {
+const getToDosByCategory = (category_id) => {
   const queryString = `SELECT *
   FROM to_dos
   JOIN categories ON categories.id = category_id
   WHERE category_id = $1;`;
-  const queryParams = [categoryId];
+  const queryParams = [category_id];
 
   return db.query(queryString, queryParams)
     .then(data => {
