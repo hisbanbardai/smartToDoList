@@ -27,9 +27,9 @@ const getToDosByCategory = (category_id, user_id) => {
     .then(data => {
       return data.rows;
     })
-    .catch((err => {
+    .catch((err) => {
       console.log(err.message);
-    }));
+    });
 };
 
 const getToDoById = (toDo_id) => {
@@ -42,9 +42,9 @@ const getToDoById = (toDo_id) => {
     .then(data => {
       return data.rows;
     })
-    .catch((err => {
+    .catch((err) => {
       console.log(err.message);
-    }));
+    });
 };
 
 const addToDo = (toDo) => {
