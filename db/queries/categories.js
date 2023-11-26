@@ -1,5 +1,6 @@
 const db = require('../connection');
 
+// Return name of category based on ID
 const getCategoryById = (id) => {
   const queryString = `SELECT name
   FROM categories
