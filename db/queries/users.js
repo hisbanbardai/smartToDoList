@@ -22,7 +22,23 @@ const getUserById = (userId) => {
     });
 };
 
+const getUserByEmail = (email) => {
+  const queryString = `SELECT *
+  FROM users
+  WHERE email LIKE $1`;
+  const queryParams = [`%${email}%`];
+
+  return db.query(queryString, queryParams)
+    .then((data) => {
+      return data.rows;
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
 module.exports = {
   getUsers,
-  getUserById
+  getUserById,
+  getUserByEmail
 };
