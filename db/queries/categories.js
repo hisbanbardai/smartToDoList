@@ -14,3 +14,5 @@ const getCategoryById = (id) => {
     console.log(err.message);
   });
 };
+
+module.exports = { getCategoryById };
