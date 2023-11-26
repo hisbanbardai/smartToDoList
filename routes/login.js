@@ -29,9 +29,11 @@ router.post("/", (req, res) => {
   const { email, password } = req.body;
   if (email && password) {
     getUserByEmail(email)
-    .then(user => console.log(user));
-    // req.session.user_id = '1';
-    // res.redirect("/");
+    .then((user) => {
+      req.session.user_id = user.id;
+      res.redirect("/");
+    })
+    .catch((err) => console.log(err.message));
   } else {
     return res.status(400).send("Email and password are required");
   }
