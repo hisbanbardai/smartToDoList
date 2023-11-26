@@ -25,11 +25,8 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  const { email, password } = req.body;
-  const user = {
-    email,
-    password
-  };
+  const { name, email, password } = req.body;
+  const user = { name, email, password };
 
   addUser(user)
   .then((id) => {
