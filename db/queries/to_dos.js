@@ -83,9 +83,34 @@ const addToDo = (toDo) => {
   });
 }
 
+const editToDo = (toDo) => {
+  // Assumes toDo contains keys called "id" and "category_id"
+  const queryParams = [];
+
+  let queryString = `UPDATE to_dos
+  SET `;
+
+  queryParams.push(Number(toDo.category_id));
+  queryString += `category_id = $${queryParams.length}`;
+
+  queryParams.push((Number(toDo.id)));
+  queryString += `WHERE id = $${queryParams.length}
+  RETURNING *;
+  `;
+
+  return db.query(queryString, queryParams)
+  .then((data) => {
+    return data.rows;
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+}
+
 module.exports = {
   getToDos,
   getToDosByCategory,
   getToDoById,
-  addToDo
+  addToDo,
+  editToDo
  };
