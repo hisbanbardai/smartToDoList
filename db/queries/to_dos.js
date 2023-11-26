@@ -3,7 +3,7 @@ const db = require('../connection');
 const getToDos = (user_id) => {
   const queryString = `SELECT *
   FROM to_dos
-  WHERE user_id = $1`;
+  WHERE user_id = $1;`;
   const queryParams = [user_id];
 
   return db.query(queryString, queryParams)
@@ -71,8 +71,7 @@ const addToDo = (toDo) => {
   }
 
   queryString += `)
-  RETURNING *;
-  `;
+  RETURNING *;`;
 
   return db.query(queryString, queryParams)
   .then((data) => {
@@ -95,8 +94,7 @@ const editToDo = (toDo) => {
 
   queryParams.push((Number(toDo.id)));
   queryString += `WHERE id = $${queryParams.length}
-  RETURNING *;
-  `;
+  RETURNING *;`;
 
   return db.query(queryString, queryParams)
   .then((data) => {
