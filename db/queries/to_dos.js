@@ -43,6 +43,10 @@ const addToDo = (toDo) => {
   const keys = Object.keys(toDo);
 
   let queryString = `INSERT INTO to_dos (
+    name,
+    category_id,
+    user_id,
+    created_at
     )
     VALUES (`;
 
