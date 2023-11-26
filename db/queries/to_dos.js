@@ -1,11 +1,19 @@
 const db = require('../connection');
 
-// const getToDos = () => {
-//   return db.query('SELECT * FROM to_dos;')
-//     .then(data => {
-//       return data.rows;
-//     });
-// };
+const getToDos = (user_id) => {
+  const queryString = `SELECT *
+  FROM to_dos
+  WHERE user_id = $1`;
+  const queryParams = [user_id];
+
+  return db.query(queryString, queryParams)
+    .then(data => {
+      return data.rows;
+    });
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
 
 const getToDosByCategory = (category_id, user_id) => {
   const queryString = `SELECT *
