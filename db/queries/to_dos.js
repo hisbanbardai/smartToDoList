@@ -1,5 +1,6 @@
 const db = require('../connection');
 
+// Get all To Dos for a specific user
 const getToDos = (user_id) => {
   const queryString = `SELECT *
   FROM to_dos
@@ -15,6 +16,7 @@ const getToDos = (user_id) => {
     });
 };
 
+// Get all To Dos for a specific user with a specific category
 const getToDosByCategory = (category_id, user_id) => {
   const queryString = `SELECT *
   FROM to_dos
@@ -32,6 +34,7 @@ const getToDosByCategory = (category_id, user_id) => {
     });
 };
 
+// Fetch To Do using single ID
 const getToDoById = (toDo_id) => {
   const queryString = `SELECT *
   FROM to_dos
@@ -47,6 +50,7 @@ const getToDoById = (toDo_id) => {
     });
 };
 
+// Add new To Do with required (NOT NULL) values only
 const addToDo = (toDo) => {
   const queryParams = [];
   const keys = Object.keys(toDo);
@@ -82,6 +86,7 @@ const addToDo = (toDo) => {
   });
 };
 
+// Update category of a To Do using ID
 const editToDo = (toDo) => {
   // Assumes toDo contains keys called "id" and "category_id"
   const queryParams = [];
@@ -105,6 +110,7 @@ const editToDo = (toDo) => {
   });
 };
 
+// Delete a To Do using single ID
 const deleteToDo = (toDo_id) => {
   const queryString = `DELETE FROM to_dos
   WHERE id = $1
