@@ -30,6 +30,14 @@ router.post("/", (req, res) => {
   if (email && password) {
     getUserByEmail(email)
     .then((user) => {
+      if (!user) {
+        return res.send({ error: "no user with that email" });
+      }
+
+      if (user.password !== password) {
+        return res.send({ error: "incorrect password" });
+      }
+
       req.session.user_id = user.id;
       res.redirect("/");
     })
