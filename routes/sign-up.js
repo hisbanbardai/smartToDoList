@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const cookieSession = require("cookie-session");
-const { addUser } = require("../db/queries/users");
+const { addUser, getUserByEmail } = require("../db/queries/users");
 
 router.use(
   cookieSession({
@@ -28,12 +28,20 @@ router.post("/", (req, res) => {
   const { name, email, password } = req.body;
   const user = { name, email, password };
 
-  addUser(user)
+  // Check if email exists in database
+  getUserByEmail(user.email)
   .then((data) => {
-    req.session.user_id = data.id;
-    res.redirect("/");
-  })
-  .catch((err) => console.log(err.message));
+    if (data) {
+      return res.send({ error: "user with that email already exists" });
+    }
+
+    addUser(user)
+    .then((data) => {
+      req.session.user_id = data.id;
+      res.redirect("/");
+    })
+    .catch((err) => console.log(err.message));
+  });
 
 });
 
