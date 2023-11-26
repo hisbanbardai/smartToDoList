@@ -32,4 +32,7 @@ const getCategoryByName = (name) => {
   });
 };
 
-module.exports = { getCategoryById };
+module.exports = {
+  getCategoryById,
+  getCategoryByName
+};
