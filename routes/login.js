@@ -25,7 +25,6 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  //using getUserByEmmail() ?
   const { email, password } = req.body;
   if (email && password) {
     getUserByEmail(email)
