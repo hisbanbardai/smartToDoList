@@ -5,7 +5,7 @@ const getCategoryByName = (name) => {
   const queryString = `SELECT id
   FROM categories
   WHERE name LIKE $1`;
-  const queryParams = [ `%${name}%` ];
+  const queryParams = [`%${name}%`];
 
   return db.query(queryString, queryParams)
     .then((data) => {
