@@ -9,7 +9,7 @@ const getToDos = (user_id) => {
   return db.query(queryString, queryParams)
     .then(data => {
       return data.rows;
-    });
+    })
     .catch((err) => {
       console.log(err.message);
     });
