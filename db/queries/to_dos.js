@@ -84,6 +84,7 @@ const addToDo = (toDo) => {
 }
 
 module.exports = {
+  getToDos,
   getToDosByCategory,
   getToDoById,
   addToDo
