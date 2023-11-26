@@ -42,9 +42,9 @@ const getUserByEmail = (email) => {
 // Add user
 const addUser = (user) => {
   const queryString = `INSERT INTO users (name, email, avatar_url, password)
-  VALUES ('newuser', $1, NULL, $2)
+  VALUES ($1, $2, NULL, $2)
   RETURNING id;`;
-  const queryParams = (user.email, user.password);
+  const queryParams = (user.name, user.email, user.password);
 
   return db.query(queryString, queryParams)
     .then((data) => {
