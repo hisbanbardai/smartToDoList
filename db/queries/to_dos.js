@@ -107,6 +107,21 @@ const editToDo = (toDo) => {
   });
 };
 
+const deleteToDo = (toDo_id) => {
+  const queryString = `DELETE FROM to_dos
+  WHERE id = $1
+  RETURNING *;`;
+  const queryParams = [toDo_id];
+
+  return db.query(queryString, queryParams)
+  .then((data) => {
+    return data.rows;
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+};
+
 module.exports = {
   getToDos,
   getToDosByCategory,
