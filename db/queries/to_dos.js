@@ -1,11 +1,11 @@
 const db = require('../connection');
 
 // Get all To Dos for a specific user
-const getToDos = (user_id) => {
+const getToDos = (userId) => {
   const queryString = `SELECT *
   FROM to_dos
   WHERE user_id = $1;`;
-  const queryParams = [user_id];
+  const queryParams = [userId];
 
   return db.query(queryString, queryParams)
     .then((data) => {
@@ -17,13 +17,13 @@ const getToDos = (user_id) => {
 };
 
 // Get all To Dos for a specific user with a specific category
-const getToDosByCategory = (category_id, user_id) => {
+const getToDosByCategory = (categoryId, userId) => {
   const queryString = `SELECT *
   FROM to_dos
   JOIN categories ON categories.id = category_id
   WHERE category_id = $1
   AND user_id = $2;`;
-  const queryParams = [category_id, user_id];
+  const queryParams = [categoryId, userId];
 
   return db.query(queryString, queryParams)
     .then((data) => {
@@ -35,11 +35,11 @@ const getToDosByCategory = (category_id, user_id) => {
 };
 
 // Fetch To Do using single ID
-const getToDoById = (toDo_id) => {
+const getToDoById = (toDoId) => {
   const queryString = `SELECT *
   FROM to_dos
   WHERE id = $1;`;
-  const queryParams = [toDo_id];
+  const queryParams = [toDoId];
 
   return db.query(queryString, queryParams)
     .then((data) => {
@@ -65,7 +65,7 @@ const addToDo = (toDo) => {
 
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
-    queryParams.push(property[key]);
+    queryParams.push(toDo[key]);
     queryString += `$${queryParams.length}`;
 
     // Add to all values except for final value
@@ -78,12 +78,12 @@ const addToDo = (toDo) => {
   RETURNING *;`;
 
   return db.query(queryString, queryParams)
-  .then((data) => {
-    return data.rows[0];
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
+    .then((data) => {
+      return data.rows[0];
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 };
 
 // Update category of a To Do using ID
@@ -102,28 +102,28 @@ const editToDo = (toDo) => {
   RETURNING *;`;
 
   return db.query(queryString, queryParams)
-  .then((data) => {
-    return data.rows;
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
+    .then((data) => {
+      return data.rows;
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 };
 
 // Delete a To Do using single ID
-const deleteToDo = (toDo_id) => {
+const deleteToDo = (toDoId) => {
   const queryString = `DELETE FROM to_dos
   WHERE id = $1
   RETURNING *;`;
-  const queryParams = [toDo_id];
+  const queryParams = [toDoId];
 
   return db.query(queryString, queryParams)
-  .then((data) => {
-    return data.rows;
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
+    .then((data) => {
+      return data.rows;
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 };
 
 module.exports = {
@@ -133,4 +133,4 @@ module.exports = {
   addToDo,
   editToDo,
   deleteToDo
- };
+};

@@ -7,11 +7,11 @@ const getUsers = () => {
     });
 };
 
-const getUserById = (user_id) => {
+const getUserById = (id) => {
   const queryString = `SELECT *
   FROM users
   WHERE id = $1`;
-  const queryParams = [user_id];
+  const queryParams = [id];
 
   return db.query(queryString, queryParams)
     .then((data) => {
@@ -25,4 +25,4 @@ const getUserById = (user_id) => {
 module.exports = {
   getUsers,
   getUserById
- };
+};
