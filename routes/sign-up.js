@@ -29,9 +29,8 @@ router.post("/", (req, res) => {
   const user = { name, email, password };
 
   addUser(user)
-  .then((id) => {
-    console.log(id);
-    req.session.user_id = id;
+  .then((data) => {
+    req.session.user_id = data.id;
     res.redirect("/");
   })
   .catch((err) => console.log(err.message));
