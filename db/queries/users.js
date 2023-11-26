@@ -11,7 +11,7 @@ const getUsers = () => {
 const getUserById = (userId) => {
   const queryString = `SELECT *
   FROM users
-  WHERE id = $1`;
+  WHERE id = $1;`;
   const queryParams = [userId];
 
   return db.query(queryString, queryParams)
@@ -27,7 +27,7 @@ const getUserById = (userId) => {
 const getUserByEmail = (email) => {
   const queryString = `SELECT *
   FROM users
-  WHERE email = $1`;
+  WHERE email = $1;`;
   const queryParams = [email];
 
   return db.query(queryString, queryParams)
