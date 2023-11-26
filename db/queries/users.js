@@ -2,7 +2,7 @@ const db = require('../connection');
 
 const getUsers = () => {
   return db.query('SELECT * FROM users;')
-    .then(data => {
+    .then((data) => {
       return data.rows;
     });
 };
@@ -14,10 +14,10 @@ const getUserById = (user_id) => {
   const queryParams = [user_id];
 
   return db.query(queryString, queryParams)
-    .then(data => {
+    .then((data) => {
       return data.rows;
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err.message);
     });
 };
