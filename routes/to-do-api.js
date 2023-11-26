@@ -5,6 +5,7 @@ const toDoQueries = require('../db/queries/to_dos');
 router.get('/', (req, res) => {
   toDoQueries.getToDos()
     .then(toDos => {
+      
       res.json({ toDos });
     })
     .catch(err => {
