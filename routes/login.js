@@ -13,17 +13,17 @@ router.get("/", (req, res) => {
   const userId = req.session.user_id;
 
   const templateVars = {
-    user: userId 
+    user: userId
   };
 
   if(userId) {
     return res.redirect("/");
   }
 
-  res.render("login", templateVars);  
+  res.render("login", templateVars);
 });
 
-router.post("/login", (req, res) => {
+router.post("/", (req, res) => {
   //using getUserByEmmail() ?
   const { email, password } = req.body;
   if (email && password) {
