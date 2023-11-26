@@ -20,18 +20,11 @@ router.get("/", (req, res) => {
     return res.redirect("/");
   }
 
-  res.render("login", templateVars);  
+  res.render("sign-up", templateVars);  
 });
 
-router.post("/login", (req, res) => {
-  //using getUserByEmmail() ?
-  const { email, password } = req.body;
-  if (email && password) {
-    req.session.user_id = '1';
-    res.redirect("/");
-  } else {
-    return res.status(400).send("Email and password are required");
-  }
+router.post("/", (req, res) => {
+
 });
 
 module.exports = router;

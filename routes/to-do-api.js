@@ -4,7 +4,7 @@ const toDoQueries = require("../db/queries/to_dos");
 
 router.get("/", (req, res) => {
   toDoQueries
-    .getToDos()
+    .getToDos(1)
     .then((toDos) => {
       res.json({ toDos });
     })
@@ -12,6 +12,17 @@ router.get("/", (req, res) => {
       res.status(500).json({ error: err.message });
     });
 });
+
+// router.get("/", (req, res) => {
+//   toDoQueries
+//     .getToDosByCategory('1','1')
+//     .then((toDos) => {
+//       res.json({ toDos });
+//     })
+//     .catch((err) => {
+//       res.status(500).json({ error: err.message });
+//     });
+// });
 
 router.post("/", (req, res) => {});
 
