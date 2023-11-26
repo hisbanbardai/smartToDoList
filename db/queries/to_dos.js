@@ -125,5 +125,6 @@ module.exports = {
   getToDosByCategory,
   getToDoById,
   addToDo,
-  editToDo
+  editToDo,
+  deleteToDo
  };
