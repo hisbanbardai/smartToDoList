@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
     user: userId
   };
 
-  if(userId) {
+  if (userId) {
     return res.redirect("/");
   }
 
@@ -29,19 +29,19 @@ router.post("/", (req, res) => {
 
   // Check if email exists in database
   getUserByEmail(email)
-  .then((data) => {
-    if (data) {
-      return res.send({ error: "user with that email already exists" });
-    }
-
-    // If email does not exist, add user to database
-    addUser(name, email, password)
     .then((data) => {
-      req.session.user_id = data.id;
-      res.redirect("/");
-    })
-    .catch((err) => console.log(err.message));
-  });
+      if (data) {
+        return res.send({ error: "user with that email already exists" });
+      }
+
+      // If email does not exist, add user to database
+      addUser(name, email, password)
+        .then((data) => {
+          req.session.user_id = data.id;
+          res.redirect("/");
+        })
+        .catch((err) => console.log(err.message));
+    });
 
 });
 

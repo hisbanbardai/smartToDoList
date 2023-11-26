@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
     user: userId
   };
 
-  if(userId) {
+  if (userId) {
     return res.redirect("/");
   }
 
@@ -28,19 +28,19 @@ router.post("/", (req, res) => {
   const { email, password } = req.body;
   if (email && password) {
     getUserByEmail(email)
-    .then((user) => {
-      if (!user) {
-        return res.send({ error: "no user with that email" });
-      }
+      .then((user) => {
+        if (!user) {
+          return res.send({ error: "no user with that email" });
+        }
 
-      if (user.password !== password) {
-        return res.send({ error: "incorrect password" });
-      }
+        if (user.password !== password) {
+          return res.send({ error: "incorrect password" });
+        }
 
-      req.session.user_id = user.id;
-      res.redirect("/");
-    })
-    .catch((err) => console.log(err.message));
+        req.session.user_id = user.id;
+        res.redirect("/");
+      })
+      .catch((err) => console.log(err.message));
   } else {
     return res.status(400).send("Email and password are required");
   }
