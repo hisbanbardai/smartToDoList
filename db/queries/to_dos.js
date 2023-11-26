@@ -89,17 +89,11 @@ const addToDo = (toDo) => {
 // Update category of a To Do using ID
 const editToDo = (toDo) => {
   // Assumes toDo contains keys called "id" and "category_id"
-  const queryParams = [];
-
-  let queryString = `UPDATE to_dos
-  SET `;
-
-  queryParams.push(Number(toDo.category_id));
-  queryString += `category_id = $${queryParams.length}`;
-
-  queryParams.push((Number(toDo.id)));
-  queryString += `WHERE id = $${queryParams.length}
+  const queryString = `UPDATE to_dos
+  SET category_id = $1
+  WHERE id = $2
   RETURNING *;`;
+  const queryParams = [toDo.category_id, toDo.id];
 
   return db.query(queryString, queryParams)
     .then((data) => {
