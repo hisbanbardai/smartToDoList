@@ -39,8 +39,25 @@ const getUserByEmail = (email) => {
     });
 };
 
+// Add user
+const addUser = (user) => {
+  const queryString = `INSERT INTO users (name, email, avatar_url, password)
+  VALUES ('newuser', $1, NULL, $2)
+  RETURNING id;`;
+  const queryParams = (user.email, user.password);
+
+  return db.query(queryString, queryParams)
+    .then((data) => {
+      return data.rows[0];
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
 module.exports = {
   getUsers,
   getUserById,
-  getUserByEmail
+  getUserByEmail,
+  addUser
 };
