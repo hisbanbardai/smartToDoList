@@ -26,16 +26,16 @@ router.get("/", (req, res) => {
 
 router.post("/", (req, res) => {
   const { name, email, password } = req.body;
-  const user = { name, email, password };
 
   // Check if email exists in database
-  getUserByEmail(user.email)
+  getUserByEmail(email)
   .then((data) => {
     if (data) {
       return res.send({ error: "user with that email already exists" });
     }
 
-    addUser(user)
+    // If email does not exist, add user to database
+    addUser(name, email, password)
     .then((data) => {
       req.session.user_id = data.id;
       res.redirect("/");
