@@ -7,6 +7,7 @@ const getUsers = () => {
     });
 };
 
+// Get user by specific ID
 const getUserById = (userId) => {
   const queryString = `SELECT *
   FROM users
@@ -22,11 +23,12 @@ const getUserById = (userId) => {
     });
 };
 
+// Get user by email
 const getUserByEmail = (email) => {
   const queryString = `SELECT *
   FROM users
-  WHERE email LIKE $1`;
-  const queryParams = [`%${email}%`];
+  WHERE email = $1`;
+  const queryParams = [email];
 
   return db.query(queryString, queryParams)
     .then((data) => {
