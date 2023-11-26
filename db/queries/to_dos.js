@@ -81,7 +81,7 @@ const addToDo = (toDo) => {
   .catch((err) => {
     console.log(err.message);
   });
-}
+};
 
 const editToDo = (toDo) => {
   // Assumes toDo contains keys called "id" and "category_id"
@@ -105,7 +105,7 @@ const editToDo = (toDo) => {
   .catch((err) => {
     console.log(err.message);
   });
-}
+};
 
 module.exports = {
   getToDos,
