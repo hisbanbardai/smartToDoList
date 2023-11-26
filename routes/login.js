@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const cookieSession = require("cookie-session");
+const { getUserByEmail } = require("../db/queries/users");
 
 router.use(
   cookieSession({
@@ -27,8 +28,10 @@ router.post("/", (req, res) => {
   //using getUserByEmmail() ?
   const { email, password } = req.body;
   if (email && password) {
-    req.session.user_id = '1';
-    res.redirect("/");
+    getUserByEmail(email)
+    .then(user => console.log(user));
+    // req.session.user_id = '1';
+    // res.redirect("/");
   } else {
     return res.status(400).send("Email and password are required");
   }
