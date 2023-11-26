@@ -17,10 +17,10 @@ app.set('view engine', 'ejs');
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(
-  '../styles',
+  "/styles",
   sassMiddleware({
-    source: __dirname + '/styles',
-    destination: __dirname + '/public/styles',
+    source: __dirname + "/../styles",
+    destination: __dirname + "/../public/styles",
     isSass: false, // false => scss, true => sass
   })
 );
@@ -32,7 +32,7 @@ const userApiRoutes = require('../routes/users-api');
 const widgetApiRoutes = require('../routes/widgets-api');
 const usersRoutes = require('../routes/users');
 const loginRoutes = require('../routes/login');
-const todoRoutes = require('../routes/to-do-api');
+const toDoApiRoutes = require('../routes/to-do-api');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -41,7 +41,7 @@ app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/login', loginRoutes);
-app.use('/api/to-dos', todoRoutes)
+app.use('/api/todo', toDoApiRoutes);
 // Note: mount other resources here, using the same pattern above
 
 // Home page
