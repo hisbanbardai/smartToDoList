@@ -8,12 +8,12 @@ const getCategoryByName = (name) => {
   const queryParams = [ `%${name}%` ];
 
   return db.query(queryString, queryParams)
-  .then((data) => {
-    return data.rows;
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
+    .then((data) => {
+      return data.rows;
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 };
 
-module.exports = { getCategoryById };
+module.exports = { getCategoryByName };
