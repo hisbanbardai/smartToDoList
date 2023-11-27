@@ -75,7 +75,12 @@ $(document).ready(function() {
     const todo = $('#myForm').serialize();
     console.log($(this).serialize());
 
-    $.post("/to-dos", todo).then($loadTodos)      
+    $.post("/api/todo", todo)
+      .then((data) => {
+        console.log(data);
+        $loadTodos();
+      })
+      .catch((error) => console.log(error));
     
     $("#todo-text").val(" "); // clear the text after submitting the form
 
