@@ -12,7 +12,7 @@ const categorizeItem = async function (itemName) {
       messages: [
         {
           role: "user",
-          content: `Categorize the item: ${itemName}, in one of the following categories: To watch, To eat, To read or To buy`,
+          content: `Categorize the item: ${itemName}, in one of the following categories: To Watch, To Eat, To Read or To Buy.`,
         },
       ],
       model: "gpt-3.5-turbo",
@@ -28,13 +28,13 @@ const categorizeItem = async function (itemName) {
 };
 
 async function main() {
-  const itemName = "Sushi"; // Replace with the actual item name
+  const itemName = "Frdsfsdfds"; // Replace with the actual item name
   const suggestedCategory = await categorizeItem(itemName);
-
+  // return suggestedCategory;
   console.log(`Suggested category for ${itemName}: ${suggestedCategory}`);
 }
 
-main();
+// main();
 
 module.exports = categorizeItem;
 
