@@ -59,12 +59,23 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/:id", (req, res) => {});
+router.get("/:id", (req, res) => {
+  const userId = req.params.id;
+
+  toDoQueries
+    .getToDos(userId)
+    .then((toDos) => {
+      res.json({ toDos });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    })
+
+});
 
 router.post("/:id", (req, res) => {
   const toDoId = req.params.id;
   const newCategoryId = req.body.categoryId;
-
 
   toDoQueries
     .editToDo({ id: toDoId, category_id: newCategoryId })
@@ -89,7 +100,7 @@ router.post("/:id/delete", (req,res) => {
   .deleteToDo(toDoId)
   .then((deletedToDo) => {
     if (deletedToDo.length > 0) {
-      res.json({ message: 'To-do item deleted successfully', deletedTodo });
+      res.json({ message: 'To-do item deleted successfully', deletedToDo });
     } else {
       res.status(404).json({ error: 'Todo-item not found' });
     }
