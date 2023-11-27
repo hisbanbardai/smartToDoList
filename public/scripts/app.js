@@ -10,52 +10,25 @@ $(document).ready(function() {
 
 
       for(const todo of response.toDos) {
-
-        const todoName = $('<h3>').text(todo.name);
-        $todosList.prepend(todoName);
-        // $('#todo-container').prepend(addNewTodo(response.toDos));
+        
+        const element = createToDoElement(todo);
+        element.data('todo', todo)
+        $todosList.prepend(element);
 
       }
     
   }
+  const createToDoElement = function(todo) {
+    const element = 
+    `
+    <div class='todo'>
+    <h3>${todo.name}</h3>
+    <button class='delete-todo'>Delete</button>
+    </div>
+    `;
 
-  // const addNewTodo = function(todo) {
-  //   const $todo = $(`
-
-  //     <div id="to-watch-category" class="category1"> 
-  //       <h1>To watch</h1>
-  //       <div id="watch-todo-list" class="todo">
-  //         <h3> To do 1</h3>
-  //       </div>
-  //     </div>
-
-  //     <div class="category2"> 
-  //       <h1>To eat</h1>
-  //       <div class="todo">
-  //         <h3> To do 1</h3>
-  //       </div>
-  //     </div>
-
-  //     <div class="category3"> 
-  //       <h1>To read</h1>
-  //       <div class="todo">
-  //         <h3> To do 1</h3>
-  //       </div>
-  //     </div>
-
-  //     <div class="category4"> 
-  //       <h1>To buy</h1>
-  //       <div class="todo">
-  //         <h3> To do 1</h3>
-  //       </div>
-  //     </div>
-      
-  //   `);
-
-  //   return $todo;
-  // };
-
-
+    return $(element).data('todo', todo);
+  }
 
 
   // Define an escape function to safely escape HTML content
@@ -65,6 +38,27 @@ $(document).ready(function() {
   //   return div.innerHTML;
   // };
 
+  //Function to delete a todo 
+  $('.todo-main-container').on('click', '.delete-todo', function(event) {
+
+    console.log('Deleting');
+    const todoElement = $(this).parent();
+    console.log(todoElement);
+    const todo = todoElement.data('todo');
+    console.log(todo);
+    
+    $.ajax({
+      url: `/api/todo/${todo.id}`,
+      type: 'DELETE',
+    })
+    .then(() => {
+      console.log('delete todo');
+      todoElement.remove();
+    })
+    .catch(error => console.log("Error: ", error)); 
+
+
+  });
 
   // Function to submit the form
   $('#myForm').on('submit', function(event) {
@@ -80,7 +74,7 @@ $(document).ready(function() {
         console.log(data);
         $loadTodos();
       })
-      .catch((error) => console.log(error));
+      .catch(error => console.log(error));
     
     $("#todo-text").val(" "); // clear the text after submitting the form
 
