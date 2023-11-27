@@ -94,7 +94,8 @@ router.post("/:id", (req, res) => {
 });
 
 
-router.post("/:id/delete", (req,res) => {
+router.delete("/:id", (req,res) => {
+  console.log('Hello')
   const toDoId = req.params.id;
   toDoQueries
   .deleteToDo(toDoId)
