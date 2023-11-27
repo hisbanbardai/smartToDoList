@@ -59,10 +59,57 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/:id", (req, res) => {});
+router.get("/:id", (req, res) => {
+  const userId = req.params.id;
 
-router.post("/:id", (req, res) => {});
+  toDoQueries
+    .getToDos(userId)
+    .then((toDos) => {
+      res.json({ toDos });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    })
 
-router.post("/:id/delete", (req, res) => {});
+});
+
+router.post("/:id", (req, res) => {
+  const toDoId = req.params.id;
+  const newCategoryId = req.body.categoryId;
+
+  toDoQueries
+    .editToDo({ id: toDoId, category_id: newCategoryId })
+    .then((editedToDo) => {
+      // Check if a to-do item was edited
+      if (editedToDo.length > 0) {
+        console.log('To-do item edited successfully', editedToDo);
+        res.redirect('/')
+      } else {
+        res.status(404).json({ error: 'To-do item not found' });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+});
+
+
+router.delete("/:id", (req,res) => {
+  console.log('Hello')
+  const toDoId = req.params.id;
+  toDoQueries
+  .deleteToDo(toDoId)
+  .then((deletedToDo) => {
+    if (deletedToDo.length > 0) {
+      res.json({ message: 'To-do item deleted successfully', deletedToDo });
+    } else {
+      res.status(404).json({ error: 'Todo-item not found' });
+    }
+  })
+  .catch((err) => {
+    res.status(500).json({ error: err.message });
+  });
+
+});
 
 module.exports = router;
