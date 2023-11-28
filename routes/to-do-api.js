@@ -3,10 +3,27 @@ const router = express.Router();
 const toDoQueries = require("../db/queries/to_dos");
 const categoryQueries = require("../db/queries/categories");
 const categorizeItem = require("../server/categorizeItem");
+const cookieSession = require("cookie-session");
+
+router.use(
+  cookieSession({
+    name: "session",
+    keys: ["key1", "key2"],
+  })
+);
 
 router.get("/", (req, res) => {
+  let userId = req.session.user_id;
+  if (!userId) {
+    res
+      .status(401)
+      .send(
+        "<html><body><h3>You are not logged in. Please <a href='/login'>login</a> or <a href='/sign-up'>register</a> first.</h3></body></html>\n"
+      );
+    return;
+  }
   toDoQueries
-    .getToDos(1)
+    .getToDos(userId)
     .then((toDos) => {
       res.json({ toDos });
     })
@@ -18,6 +35,12 @@ router.get("/", (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
+    let userId = req.session.user_id;
+    if (!userId) {
+      res.redirect("/");
+      return;
+    }
+
     if (!req.body.text || req.body.text.trim() === "") {
       return res
         .status(400)
@@ -44,7 +67,7 @@ router.post("/", async (req, res) => {
       const toDo = {
         toDoName,
         categoryId,
-        user_id: 1,
+        user_id: req.session.user_id,
         created_at: currentTimestamp,
       };
 
@@ -97,6 +120,11 @@ router.post("/:id", (req, res) => {
 router.delete("/:id", (req,res) => {
   console.log('Hello')
   const toDoId = req.params.id;
+  let userId = req.session.user_id;
+  if (!userId) {
+    res.redirect("/");
+    return;
+  }
   toDoQueries
   .deleteToDo(toDoId)
   .then((deletedToDo) => {
