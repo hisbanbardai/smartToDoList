@@ -9,6 +9,7 @@ const morgan = require('morgan');
 const PORT = process.env.PORT || 8080;
 const app = express();
 
+const cookieSession = require('cookie-session');
 const getUserById = require('../db/queries/users');
 
 app.set('view engine', 'ejs');
@@ -27,6 +28,13 @@ app.use(
   })
 );
 app.use(express.static('public'));
+
+app.use(
+  cookieSession({
+    name: "session",
+    keys: ["key1", "key2"],
+  })
+);
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
