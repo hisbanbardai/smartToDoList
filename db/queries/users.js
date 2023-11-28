@@ -16,7 +16,7 @@ const getUserById = (userId) => {
 
   return db.query(queryString, queryParams)
     .then((data) => {
-      return data.rows;
+      return data.rows[0];
     })
     .catch((err) => {
       console.log(err.message);
@@ -43,7 +43,7 @@ const getUserByEmail = (email) => {
 const addUser = (name, email, password) => {
   const queryString = `INSERT INTO users (name, email, avatar_url, password)
   VALUES ($1, $2, NULL, $3)
-  RETURNING id;`;
+  RETURNING *;`;
   const queryParams = [name, email, password];
 
   return db.query(queryString, queryParams)

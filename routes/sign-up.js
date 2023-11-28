@@ -36,8 +36,8 @@ router.post("/", (req, res) => {
 
       // If email does not exist, add user to database
       addUser(name, email, password)
-        .then((data) => {
-          req.session.user_id = data.id;
+        .then((user) => {
+          req.session.user_id = user.id;
           res.redirect("/");
         })
         .catch((err) => console.log(err.message));
