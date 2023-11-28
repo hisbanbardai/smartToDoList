@@ -16,7 +16,7 @@
           </a>
         </div>
       <% } else { %>
-        <span>Logged in as: <%= user.email %>!</span>
+        <span>Logged in as <%= user.name %></span>
         <form method="POST" action="/logout">
           <button type="submit">Logout</button>
         </form>
