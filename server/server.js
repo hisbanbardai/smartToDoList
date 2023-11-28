@@ -61,9 +61,12 @@ app.use('/api/todo', toDoApiRoutes);
 // Separate them into separate routes files (see above).
 
 app.get('/', (req, res) => {
-  const user = getUserById(req.session.user_id);
-  const templateVars = { user };
-  res.render('index', templateVars);
+  getUserById(req.session.user_id)
+  .then((user) => {
+    const templateVars = { user };
+    console.log(templateVars);
+    res.render('index', templateVars);
+  });
 });
 
 app.listen(PORT, () => {
