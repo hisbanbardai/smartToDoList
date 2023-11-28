@@ -4,7 +4,12 @@
     <h1>LOGO</h1>
     <div class ='nav-button'>
 
-      <% if (!user) { %>
+      <% if (user[0]) { %>
+        <span>Logged in as <%= user[0].name %></span>
+        <form method="POST" action="/logout">
+          <button type="submit">Logout</button>
+        </form>
+        <% } else { %>
         <div>
           <a href="/login">
             <button class='login-button'>Login</button>
@@ -15,11 +20,6 @@
             <button class='sign-up-button'>Sign Up</button>
           </a>
         </div>
-      <% } else { %>
-        <span>Logged in as <%= user.name %></span>
-        <form method="POST" action="/logout">
-          <button type="submit">Logout</button>
-        </form>
       <% } %>
 
   </div>
