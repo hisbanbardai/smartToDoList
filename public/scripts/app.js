@@ -56,11 +56,24 @@ $(document).ready(function () {
       url: `/api/todo/${todo.id}`,
       type: "DELETE",
     })
-      .then(() => {
+      .done((data) => {
         console.log("delete todo");
         todoElement.remove();
       })
-      .catch((error) => console.log("Error: ", error));
+      .fail((jqXHR, textStatus, errorThrown) => {
+        if (jqXHR.status === 404) {
+          $("body").html(
+            "<html><body><h3>You are not logged in. Please <a href='/login'>login</a> or <a href='/sign-up'>register</a> first.</h3></body></html>\n"
+          );
+        }
+        // Handle the failure, log the error
+        console.log("Error:", textStatus, errorThrown);
+      });
+      // .then(() => {
+      //   console.log("delete todo");
+      //   todoElement.remove();
+      // })
+      // .catch((error) => console.log("Error: ", error));
   });
 
   // Function to submit the form
@@ -88,8 +101,18 @@ $(document).ready(function () {
       url: "/api/todo",
       method: "GET",
     })
-      .then((renderTodos))
-      .catch((error) => console.log("Error: ", error.responseText));
+      .done((data) => {
+          renderTodos(data);
+      })
+      .fail((jqXHR, textStatus, errorThrown) => {
+        if (jqXHR.status === 401) {
+          $("body").html(
+            "<html><body><h3>You are not logged in. Please <a href='/login'>login</a> or <a href='/sign-up'>register</a> first.</h3></body></html>\n"
+          );
+        }
+        // Handle the failure, log the error
+        console.log("Error:", textStatus, errorThrown);
+      });
   };
 
   $loadTodos();

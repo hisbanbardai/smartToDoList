@@ -35,6 +35,12 @@ router.get("/", (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
+    let userId = req.session.user_id;
+    if (!userId) {
+      res.redirect("/");
+      return;
+    }
+
     if (!req.body.text || req.body.text.trim() === "") {
       return res
         .status(400)
@@ -114,6 +120,11 @@ router.post("/:id", (req, res) => {
 router.delete("/:id", (req,res) => {
   console.log('Hello')
   const toDoId = req.params.id;
+  let userId = req.session.user_id;
+  if (!userId) {
+    res.redirect("/");
+    return;
+  }
   toDoQueries
   .deleteToDo(toDoId)
   .then((deletedToDo) => {
