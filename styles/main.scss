@@ -26,24 +26,31 @@ body {
     align-items: center;
     background-color: burlywood;
     width: 100%;
-    
+
     h1 {
       padding: 0 30px;
     }
-    
+
     .nav-button {
       display: flex;
+      align-items: center;
       padding: 0 30px;
 
-      .login-button, .sign-up-button {     
-        padding: 8px 30px;  
+      .login-button, .sign-up-button {
+        padding: 8px 30px;
         margin: 0 5px;
         font-size: 16px;
         border-radius: 8px;
         border: 2px solid #008CBA;;
       }
+
+      .username {
+        padding-right: 30px;
+        font-weight: bold;
+        font-size: 24px;
+      }
     }
-    
+
   }
 
   #myForm {
@@ -64,7 +71,7 @@ body {
     .add-button {
       background-color: #008CBA;
       font-size: 20px;
-      padding: 8px 30px;  
+      padding: 8px 30px;
       margin: 0 5px;
       font-size: 16px;
       border-radius: 8px;
@@ -72,7 +79,7 @@ body {
     }
 
   }
-  
+
 
   main {
     display: flex;
@@ -99,8 +106,8 @@ body {
       }
     }
   }
-  
-    
+
+
 
   }
 
