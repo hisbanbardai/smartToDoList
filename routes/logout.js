@@ -9,9 +9,10 @@ router.use(
   })
 );
 
-router.post("/", (req, res) => {
+// Using GET route as navbar uses links for buttons
+router.get("/", (req, res) => {
   req.session = null;
   res.redirect("/login");
-});
+})
 
 module.exports = router;
