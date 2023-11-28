@@ -6,9 +6,9 @@
 
       <% if (user) { %>
         <span>Logged in as <%= user.name %></span>
-        <form method="POST" action="/logout">
-          <button type="submit">Logout</button>
-        </form>
+        <a href="/logout">
+          <button class='login-button'>Logout</button>
+        </a>
         <% } else { %>
         <div>
           <a href="/login">
