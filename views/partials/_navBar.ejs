@@ -4,8 +4,8 @@
     <h1>LOGO</h1>
     <div class ='nav-button'>
 
-      <% if (user[0]) { %>
-        <span>Logged in as <%= user[0].name %></span>
+      <% if (user) { %>
+        <span>Logged in as <%= user.name %></span>
         <form method="POST" action="/logout">
           <button type="submit">Logout</button>
         </form>

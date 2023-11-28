@@ -16,7 +16,7 @@ const getUserById = (userId) => {
 
   return db.query(queryString, queryParams)
     .then((data) => {
-      return data.rows;
+      return data.rows[0];
     })
     .catch((err) => {
       console.log(err.message);
