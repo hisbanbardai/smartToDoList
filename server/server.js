@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 8080;
 const app = express();
 
 const cookieSession = require('cookie-session');
-const getUserById = require('../db/queries/users');
+const { getUserById } = require('../db/queries/users');
 
 app.set('view engine', 'ejs');
 
