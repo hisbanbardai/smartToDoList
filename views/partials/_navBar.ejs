@@ -4,16 +4,23 @@
     <h1>LOGO</h1>
     <div class ='nav-button'>
 
-      <div>
-        <a href="/login"> 
-          <button class='login-button'>Login</button>
-        </a>
-      </div>
-      <div>
-        <a href="/sign-up"> 
-          <button class='sign-up-button'>Sign Up</button>
-        </a>
-      </div>
+      <% if (!user) { %>
+        <div>
+          <a href="/login">
+            <button class='login-button'>Login</button>
+          </a>
+        </div>
+        <div>
+          <a href="/sign-up">
+            <button class='sign-up-button'>Sign Up</button>
+          </a>
+        </div>
+      <% } else { %>
+        <span>Logged in as: <%= user.email %>!</span>
+        <form method="POST" action="/logout">
+          <button type="submit">Logout</button>
+        </form>
+      <% } %>
 
   </div>
 </nav>
