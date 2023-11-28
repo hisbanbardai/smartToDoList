@@ -9,6 +9,9 @@ const morgan = require('morgan');
 const PORT = process.env.PORT || 8080;
 const app = express();
 
+const cookieSession = require('cookie-session');
+const { getUserById } = require('../db/queries/users');
+
 app.set('view engine', 'ejs');
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -26,12 +29,20 @@ app.use(
 );
 app.use(express.static('public'));
 
+app.use(
+  cookieSession({
+    name: "session",
+    keys: ["key1", "key2"],
+  })
+);
+
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const userApiRoutes = require('../routes/users-api');
 const widgetApiRoutes = require('../routes/widgets-api');
 const usersRoutes = require('../routes/users');
 const loginRoutes = require('../routes/login');
+const logoutRoutes = require('../routes/logout');
 const signUpRoutes = require('../routes/sign-up');
 const toDoApiRoutes = require('../routes/to-do-api');
 
@@ -42,6 +53,7 @@ app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/login', loginRoutes);
+app.use('/logout', logoutRoutes);
 app.use('/sign-up', signUpRoutes);
 app.use('/api/todo', toDoApiRoutes);
 // Note: mount other resources here, using the same pattern above
@@ -51,7 +63,11 @@ app.use('/api/todo', toDoApiRoutes);
 // Separate them into separate routes files (see above).
 
 app.get('/', (req, res) => {
-  res.render('index');
+  getUserById(req.session.user_id)
+  .then((user) => {
+    const templateVars = { user };
+    res.render('index', templateVars);
+  });
 });
 
 app.listen(PORT, () => {
