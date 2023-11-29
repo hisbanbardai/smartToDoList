@@ -1,6 +1,7 @@
 // Client facing scripts here
 
 $(document).ready(function () {
+
   const renderTodos = function (response) {
     const toDoCategory = {
       1: "watch-todo-list",
@@ -30,7 +31,7 @@ $(document).ready(function () {
   const createToDoElement = function (todo) {
     const element = `
     <div class='todo'>
-    <h3>${todo.name}</h3>
+    <h3 class='todo-text'>${todo.name}</h3>
     <button class='delete-todo'>Delete</button>
     <button class='edit-todo'>Edit</button>
     </div>
@@ -69,11 +70,6 @@ $(document).ready(function () {
         // Handle the failure, log the error
         console.log("Error:", textStatus, errorThrown);
       });
-      // .then(() => {
-      //   console.log("delete todo");
-      //   todoElement.remove();
-      // })
-      // .catch((error) => console.log("Error: ", error));
   });
 
   // Function to edit a todo
@@ -93,12 +89,32 @@ $(document).ready(function () {
         url: `/api/todo/${todo.id}`,
         method: "POST",
         data: { categoryId: newCategoryId },
-        success: function (data) {
-            // Handle success, you might update the UI or show a message
-            console.log("To-do item edited successfully", data);
+        success: function (editedToDo) {
+      
+          // Update UI after editing
+          const toDoCategory = {
+            1: "watch-todo-list",
+            2: "eat-todo-list",
+            3: "read-todo-list",
+            4: "buy-todo-list",
+          };
+          
+          const $todosList = $(`#${toDoCategory[editedToDo.category_id]}`);
+
+          // Remove the existing to-do item from the UI
+          todoElement.remove();
+    
+          // Create a new element for the edited to-do
+          const editedToDoElement = createToDoElement(editedToDo);
+    
+          // Append the new element to the correct category list
+          $todosList.append(editedToDoElement);
+    
+          console.log("To-do item edited successfully", editedToDo);
+    
         },
         error: function (error) {
-            console.error("Error editing to-do item", error);
+          console.error("Error editing to-do item", error);
         },
     });
 });
