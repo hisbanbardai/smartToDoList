@@ -87,22 +87,26 @@ $(document).ready(function () {
     const todo = $("#myForm").serialize();
     console.log($(this).serialize());
 
+    // Check if submission is empty
     if (todo === 'text=') {
       $('.add-button').text(`Add`);
       $('.error-message').text(`Entry cannot be blank`);
       $('.error-message').slideDown();
     } else {
+      // Make AJAX request
       $.post("/api/todo", todo)
         .then((data) => {
           console.log(data);
           $('.add-button').text(`Add`);
+
+          // Show error if API replies with an error message
           if (data.message) {
             $('.error-message').text(`Entry could not be categorized.`);
             $('.error-message').slideDown();
-        } else {
-          $loadTodos();
-        }
-          })
+          } else {
+            $loadTodos();
+          }
+        })
         .catch((error) => {
           $('.add-button').text(`Add`);
           $('.error-message').text(`Entry could not be categorized.`);
