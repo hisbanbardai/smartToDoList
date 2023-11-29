@@ -1,6 +1,7 @@
 // Client facing scripts here
 
 $(document).ready(function () {
+
   const renderTodos = function (response) {
     const toDoCategory = {
       1: "watch-todo-list",
@@ -30,9 +31,10 @@ $(document).ready(function () {
   const createToDoElement = function (todo) {
     const element = `
     <div class='todo'>
-    <h3>${todo.name}</h3>
+    <h3 class='todo-text'>${todo.name}</h3>
     <input type="checkbox" class="mark-complete">
     <button class='delete-todo'>Delete</button>
+    <button class='edit-todo'>Edit</button>
     </div>
     `;
     return $(element).data("todo", todo);
@@ -47,7 +49,6 @@ $(document).ready(function () {
 
   //Function to delete a todo
   $(".todo-main-container").on("click", ".delete-todo", function (event) {
-    console.log("Deleting");
     const todoElement = $(this).parent();
     console.log(todoElement);
     const todo = todoElement.data("todo");
@@ -70,12 +71,54 @@ $(document).ready(function () {
         // Handle the failure, log the error
         console.log("Error:", textStatus, errorThrown);
       });
-    // .then(() => {
-    //   console.log("delete todo");
-    //   todoElement.remove();
-    // })
-    // .catch((error) => console.log("Error: ", error));
   });
+
+  // Function to edit a todo
+  $(".todo-main-container").on("click", ".edit-todo", function (event) {
+    console.log("editing");
+    // Get the to-do item ID from the data attribute
+    const todoElement = $(this).parent();
+    console.log(todoElement);
+    const todo = todoElement.data("todo");
+    console.log(todo);
+
+    // Get the new category ID from the user using prompt
+    const newCategoryId = prompt("Enter new category ID:");
+
+    // Send an Ajax request to update the to-do item
+    $.ajax({
+        url: `/api/todo/${todo.id}`,
+        method: "POST",
+        data: { categoryId: newCategoryId },
+        success: function (editedToDo) {
+      
+          // Update UI after editing
+          const toDoCategory = {
+            1: "watch-todo-list",
+            2: "eat-todo-list",
+            3: "read-todo-list",
+            4: "buy-todo-list",
+          };
+          
+          const $todosList = $(`#${toDoCategory[editedToDo.category_id]}`);
+
+          // Remove the existing to-do item from the UI
+          todoElement.remove();
+    
+          // Create a new element for the edited to-do
+          const editedToDoElement = createToDoElement(editedToDo);
+    
+          // Append the new element to the correct category list
+          $todosList.append(editedToDoElement);
+    
+          console.log("To-do item edited successfully", editedToDo);
+    
+        },
+        error: function (error) {
+          console.error("Error editing to-do item", error);
+        },
+    });
+});
 
   // Function to submit the form
   $("#myForm").on("submit", function (event) {
