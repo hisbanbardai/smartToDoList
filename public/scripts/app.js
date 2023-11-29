@@ -90,8 +90,7 @@ $(document).ready(function () {
     // Check if submission is empty
     if (todo === 'text=') {
       $('.add-button').text(`Add`).removeAttr('disabled');
-      $('.error-message').text(`Entry cannot be blank`);
-      $('.error-message').slideDown();
+      $('.error-message').text(`Entry cannot be blank`).slideDown();
     } else {
       // Make AJAX request
       $.post("/api/todo", todo)
@@ -101,16 +100,14 @@ $(document).ready(function () {
 
           // Show error if API replies with an error message
           if (data.message) {
-            $('.error-message').text(`Entry could not be categorized.`)
-            $('.error-message').slideDown();
+            $('.error-message').text(`Entry could not be categorized.`).slideDown();
           } else {
             $loadTodos();
           }
         })
         .catch((error) => {
           $('.add-button').text(`Add`).removeAttr('disabled');
-          $('.error-message').text(`Server error - Please try again.`);
-          $('.error-message').slideDown();
+          $('.error-message').text(`Server error - Please try again.`).slideDown();
         });
     }
 
