@@ -87,22 +87,27 @@ $(document).ready(function () {
     const todo = $("#myForm").serialize();
     console.log($(this).serialize());
 
-    $.post("/api/todo", todo)
-      .then((data) => {
-        console.log(data);
-        $('.add-button').text(`Add`);
-        if (data.message) {
+    if (todo === 'text=') {
+      $('.error-message').text(`Entry cannot be blank`);
+      $('error.message').slideDown();
+    } else {
+      $.post("/api/todo", todo)
+        .then((data) => {
+          console.log(data);
+          $('.add-button').text(`Add`);
+          if (data.message) {
+            $('.error-message').slideDown();
+        } else {
+          $loadTodos();
+        }
+          })
+        .catch((error) => {
+          $('.add-button').text(`Add`);
           $('.error-message').slideDown();
-       } else {
-        $loadTodos();
-      }
-        })
-      .catch((error) => {
-        $('.add-button').text(`Add`);
-        $('.error-message').slideDown();
-      });
+        });
+    }
 
-    $("#todo-text").val(" "); // clear the text after submitting the form
+    $("#todo-text").val(""); // clear the text after submitting the form
   });
 
   // Function to load todos
