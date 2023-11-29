@@ -79,6 +79,8 @@ $(document).ready(function () {
   // Function to submit the form
   $("#myForm").on("submit", function (event) {
     event.preventDefault();
+    // Slide up error message on click if open
+    $('.error-message').slideUp();
 
     // Serialize the form data
     const todo = $("#myForm").serialize();
@@ -91,11 +93,13 @@ $(document).ready(function () {
           $('.error-message').text(`Entry could not be categorized.`);
           $('.error-message').slideDown();
        } else {
-        $('.error-message').slideUp();
         $loadTodos();
       }
         })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        $('.error-message').text(`Entry could not be categorized.`);
+        $('.error-message').slideDown();
+      });
 
     $("#todo-text").val(" "); // clear the text after submitting the form
   });
