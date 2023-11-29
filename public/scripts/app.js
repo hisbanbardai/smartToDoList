@@ -88,14 +88,16 @@ $(document).ready(function () {
     console.log($(this).serialize());
 
     if (todo === 'text=') {
+      $('.add-button').text(`Add`);
       $('.error-message').text(`Entry cannot be blank`);
-      $('error.message').slideDown();
+      $('.error-message').slideDown();
     } else {
       $.post("/api/todo", todo)
         .then((data) => {
           console.log(data);
           $('.add-button').text(`Add`);
           if (data.message) {
+            $('.error-message').text(`Entry could not be categorized.`);
             $('.error-message').slideDown();
         } else {
           $loadTodos();
@@ -103,6 +105,7 @@ $(document).ready(function () {
           })
         .catch((error) => {
           $('.add-button').text(`Add`);
+          $('.error-message').text(`Entry could not be categorized.`);
           $('.error-message').slideDown();
         });
     }
