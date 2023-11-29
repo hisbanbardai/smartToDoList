@@ -4,7 +4,7 @@ const db = require('../connection');
 const getToDos = (userId) => {
   const queryString = `SELECT *
   FROM to_dos
-  WHERE user_id = $1;`;
+  WHERE user_id = $1 and is_complete = 'f';`;
   const queryParams = [userId];
 
   return db.query(queryString, queryParams)
