@@ -5,7 +5,7 @@
     <div class ='nav-button'>
 
       <% if (user) { %>
-        <span class='username'><%= user.name %></span>
+        <span class='username'><a href='/users/<%= user.id %>'><%= user.name %></a></span>
         <a href="/logout">
           <button class='login-button'>Logout</button>
         </a>
