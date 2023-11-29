@@ -32,6 +32,7 @@ $(document).ready(function () {
     <div class='todo'>
     <h3>${todo.name}</h3>
     <button class='delete-todo'>Delete</button>
+    <button class='edit-todo'>Edit</button>
     </div>
     `;
     return $(element).data("todo", todo);
@@ -46,7 +47,6 @@ $(document).ready(function () {
 
   //Function to delete a todo
   $(".todo-main-container").on("click", ".delete-todo", function (event) {
-    console.log("Deleting");
     const todoElement = $(this).parent();
     console.log(todoElement);
     const todo = todoElement.data("todo");
@@ -75,6 +75,33 @@ $(document).ready(function () {
       // })
       // .catch((error) => console.log("Error: ", error));
   });
+
+  // Function to edit a todo
+  $(".todo-main-container").on("click", ".edit-todo", function (event) {
+    console.log("editing");
+    // Get the to-do item ID from the data attribute
+    const todoElement = $(this).parent();
+    console.log(todoElement);
+    const todo = todoElement.data("todo");
+    console.log(todo);
+
+    // Get the new category ID from the user using prompt
+    const newCategoryId = prompt("Enter new category ID:");
+
+    // Send an Ajax request to update the to-do item
+    $.ajax({
+        url: `/api/todo/${todo.id}`,
+        method: "POST",
+        data: { categoryId: newCategoryId },
+        success: function (data) {
+            // Handle success, you might update the UI or show a message
+            console.log("To-do item edited successfully", data);
+        },
+        error: function (error) {
+            console.error("Error editing to-do item", error);
+        },
+    });
+});
 
   // Function to submit the form
   $("#myForm").on("submit", function (event) {
