@@ -55,9 +55,43 @@ const addUser = (name, email, password) => {
     });
 };
 
+// Edit user information
+const editUser = (user) => {
+  const keys = Object.keys(user);
+  const queryParams = [];
+
+  let queryString = `UPDATE users
+  SET `;
+
+  // Set each property
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    queryParams.push(user[key]);
+    queryString += `${key} = $${queryParams.length}`;
+
+    if (i < keys.length - 1) {
+      queryString += `, `;
+    }
+  }
+
+  queryParams.push(user.id);
+  queryString += `
+  WHERE id = $${queryParams.length}
+  RETURNING *;`;
+
+  return db.query(queryString, queryParams)
+  .then((data) => {
+    return data.rows[0];
+  })
+  .catch((err) => {
+    console.log(err.message);
+  })
+};
+
 module.exports = {
   getUsers,
   getUserById,
   getUserByEmail,
-  addUser
+  addUser,
+  editUser
 };
