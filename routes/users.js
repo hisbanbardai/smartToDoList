@@ -23,7 +23,12 @@ router.get('/', (req, res) => {
 
 // GET User Profile edit page
 router.get('/:id', (req, res) => {
-  getUserById(req.session.user_id)
+  const userId = req.session.user_id;
+  if (!userId) {
+    return res.redirect("/");
+  }
+
+  getUserById(userId)
   .then((user) => {
     const templateVars = { user };
     res.render('profile', templateVars);
@@ -34,6 +39,10 @@ router.get('/:id', (req, res) => {
 router.post('/:id', (req, res) => {
   const { name, email, password } = req.body;
   const id = req.session.user_id;
+
+  if (!id) {
+    return res.redirect("/");
+  }
 
   editUser({name, email, password, id})
     .then((data) => {
