@@ -122,19 +122,43 @@ $(document).ready(function () {
   });
 
   //Function to mark todo as complete
+  let todoElement, todo;
   $(".todo-main-container").on("change", ".mark-complete", function () {
+    console.log("Triggered");
+    todoElement = $(this).parent();
+    todo = todoElement.data("todo");
+    console.log("todoElement", todoElement);
+    console.log("todo", todo);
+
     if (this.checked) {
-      const todoElement = $(this).parent();
-      const todo = todoElement.data("todo");
-      todo.is_complete = true;
-      $.ajax({
-        url: `/api/todo/${todo.id}`,
-        method: "POST",
-        data: todo,
-      }).done((data) => {
-        $loadTodos();
-      });
+      // Show the modal when the checkbox is checked
+      $("#overlay, #confirmationModal").fadeIn();
     }
+  });
+
+  // Handle close button click
+  $("#closeButton, #cancelButton").on("click", function () {
+    console.log("todoElement", todoElement);
+    console.log("todo", todo);
+    // Close the modal
+    $(".mark-complete").prop("checked", false);
+    $("#overlay, #confirmationModal").fadeOut();
+  });
+
+  //Handle confirm button click
+  $("#confirmButton").on("click", function () {
+    console.log("todoElement", todoElement);
+    todo.is_complete = true;
+    console.log("todo", todo);
+    $.ajax({
+      url: `/api/todo/${todo.id}`,
+      method: "POST",
+      data: todo,
+    }).done((data) => {
+      // Close the modal
+      $("#overlay, #confirmationModal").fadeOut(0.1);
+      $loadTodos();
+    });
   });
 
   // Function to load todos
