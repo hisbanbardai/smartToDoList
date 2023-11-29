@@ -109,7 +109,7 @@ $(document).ready(function () {
         })
         .catch((error) => {
           $('.add-button').text(`Add`);
-          $('.error-message').text(`Entry could not be categorized.`);
+          $('.error-message').text(`Server error - Please try again.`);
           $('.error-message').slideDown();
         });
     }
