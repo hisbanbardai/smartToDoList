@@ -90,14 +90,12 @@ $(document).ready(function () {
       .then((data) => {
         console.log(data);
         if (data.message) {
-          $('.error-message').text(`Entry could not be categorized.`);
           $('.error-message').slideDown();
        } else {
         $loadTodos();
       }
         })
       .catch((error) => {
-        $('.error-message').text(`Entry could not be categorized.`);
         $('.error-message').slideDown();
       });
 
