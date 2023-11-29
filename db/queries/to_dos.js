@@ -4,7 +4,7 @@ const db = require('../connection');
 const getToDos = (userId) => {
   const queryString = `SELECT *
   FROM to_dos
-  WHERE user_id = $1 and is_complete = 'f';`;
+  WHERE user_id = $1 and is_complete = 'false';`;
   const queryParams = [userId];
 
   return db.query(queryString, queryParams)
@@ -90,10 +90,10 @@ const addToDo = (toDo) => {
 const editToDo = (toDo) => {
   // Assumes toDo contains keys called "id" and "category_id"
   const queryString = `UPDATE to_dos
-  SET category_id = $1
+  SET category_id = $1, is_complete = $3
   WHERE id = $2
   RETURNING *;`;
-  const queryParams = [toDo.category_id, toDo.id];
+  const queryParams = [toDo.category_id, toDo.id, toDo.is_complete];
 
   return db.query(queryString, queryParams)
     .then((data) => {
