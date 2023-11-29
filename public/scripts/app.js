@@ -31,7 +31,7 @@ $(document).ready(function () {
     const element = `
     <div class='todo'>
     <h3>${todo.name}</h3>
-    <input type="checkbox" id="#mark-complete">
+    <input type="checkbox" class="mark-complete">
     <button class='delete-todo'>Delete</button>
     </div>
     `;
@@ -119,6 +119,22 @@ $(document).ready(function () {
 
       $("#todo-text").val(""); // clear the text after submitting the form
     });
+  });
+
+  //Function to mark todo as complete
+  $(".todo-main-container").on("change", ".mark-complete", function () {
+    if (this.checked) {
+      const todoElement = $(this).parent();
+      const todo = todoElement.data("todo");
+      todo.is_complete = true;
+      $.ajax({
+        url: `/api/todo/${todo.id}`,
+        method: "POST",
+        data: todo,
+      }).done((data) => {
+        $loadTodos();
+      });
+    }
   });
 
   // Function to load todos
