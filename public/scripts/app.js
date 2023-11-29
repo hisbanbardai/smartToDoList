@@ -79,39 +79,42 @@ $(document).ready(function () {
   // Function to submit the form
   $("#myForm").on("submit", function (event) {
     event.preventDefault();
-    // Slide up error message on click if open
-    $('.error-message').slideUp();
+
     $('.add-button').text(`Sorting...`).prop('disabled', true);
 
-    // Serialize the form data
-    const todo = $("#myForm").serialize();
-    console.log($(this).serialize());
+    // Slide up error message on click if open
+    $('.error-message').slideUp(function() {
 
-    // Check if submission is empty
-    if (todo === 'text=') {
-      $('.add-button').text(`Add`).removeAttr('disabled');
-      $('.error-message').text(`Entry cannot be blank`).slideDown();
-    } else {
-      // Make AJAX request
-      $.post("/api/todo", todo)
-        .then((data) => {
-          console.log(data);
-          $('.add-button').text(`Add`).removeAttr('disabled');
+      // Serialize the form data
+      const todo = $("#myForm").serialize();
+      console.log($(this).serialize());
 
-          // Show error if API replies with an error message
-          if (data.message) {
-            $('.error-message').text(`Entry could not be categorized.`).slideDown();
-          } else {
-            $loadTodos();
-          }
-        })
-        .catch((error) => {
-          $('.add-button').text(`Add`).removeAttr('disabled');
-          $('.error-message').text(`Server error - Please try again.`).slideDown();
-        });
-    }
+      // Check if submission is empty
+      if (todo === 'text=') {
+        $('.add-button').text(`Add`).removeAttr('disabled');
+        $('.error-message').text(`Entry cannot be blank`).slideDown();
+      } else {
+        // Make AJAX request
+        $.post("/api/todo", todo)
+          .then((data) => {
+            console.log(data);
+            $('.add-button').text(`Add`).removeAttr('disabled');
 
-    $("#todo-text").val(""); // clear the text after submitting the form
+            // Show error if API replies with an error message
+            if (data.message) {
+              $('.error-message').text(`Entry could not be categorized.`).slideDown();
+            } else {
+              $loadTodos();
+            }
+          })
+          .catch((error) => {
+            $('.add-button').text(`Add`).removeAttr('disabled');
+            $('.error-message').text(`Server error - Please try again.`).slideDown();
+          });
+      }
+
+      $("#todo-text").val(""); // clear the text after submitting the form
+    });
   });
 
   // Function to load todos
