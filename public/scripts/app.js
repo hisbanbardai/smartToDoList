@@ -87,7 +87,11 @@ $(document).ready(function () {
     $.post("/api/todo", todo)
       .then((data) => {
         console.log(data);
-        $loadTodos();
+        if (data.message) {
+          $('.error-message').text(`Entry could not be categorized.`);
+        } else {
+          $loadTodos();
+        }
       })
       .catch((error) => console.log(error));
 
