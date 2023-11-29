@@ -49,6 +49,7 @@ router.post('/:id', (req, res) => {
       console.log(data);
       res.redirect("/");
     })
+    .catch((err) => console.log(err.message));
 });
 
 module.exports = router;
