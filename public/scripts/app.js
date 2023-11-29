@@ -81,7 +81,7 @@ $(document).ready(function () {
     event.preventDefault();
     // Slide up error message on click if open
     $('.error-message').slideUp();
-    $('.add-button').text(`Sorting...`);
+    $('.add-button').text(`Sorting...`).prop('disabled', true);
 
     // Serialize the form data
     const todo = $("#myForm").serialize();
@@ -89,7 +89,7 @@ $(document).ready(function () {
 
     // Check if submission is empty
     if (todo === 'text=') {
-      $('.add-button').text(`Add`);
+      $('.add-button').text(`Add`).removeAttr('disabled');
       $('.error-message').text(`Entry cannot be blank`);
       $('.error-message').slideDown();
     } else {
@@ -97,18 +97,18 @@ $(document).ready(function () {
       $.post("/api/todo", todo)
         .then((data) => {
           console.log(data);
-          $('.add-button').text(`Add`);
+          $('.add-button').text(`Add`).removeAttr('disabled');
 
           // Show error if API replies with an error message
           if (data.message) {
-            $('.error-message').text(`Entry could not be categorized.`);
+            $('.error-message').text(`Entry could not be categorized.`)
             $('.error-message').slideDown();
           } else {
             $loadTodos();
           }
         })
         .catch((error) => {
-          $('.add-button').text(`Add`);
+          $('.add-button').text(`Add`).removeAttr('disabled');
           $('.error-message').text(`Server error - Please try again.`);
           $('.error-message').slideDown();
         });
