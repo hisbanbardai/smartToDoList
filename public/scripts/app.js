@@ -89,10 +89,12 @@ $(document).ready(function () {
         console.log(data);
         if (data.message) {
           $('.error-message').text(`Entry could not be categorized.`);
-        } else {
-          $loadTodos();
-        }
-      })
+          $('.error-message').slideDown();
+       } else {
+        $('.error-message').slideUp();
+        $loadTodos();
+      }
+        })
       .catch((error) => console.log(error));
 
     $("#todo-text").val(" "); // clear the text after submitting the form
