@@ -81,6 +81,7 @@ $(document).ready(function () {
     event.preventDefault();
     // Slide up error message on click if open
     $('.error-message').slideUp();
+    $('.add-button').text(`Sorting...`);
 
     // Serialize the form data
     const todo = $("#myForm").serialize();
@@ -89,6 +90,7 @@ $(document).ready(function () {
     $.post("/api/todo", todo)
       .then((data) => {
         console.log(data);
+        $('.add-button').text(`Add`);
         if (data.message) {
           $('.error-message').slideDown();
        } else {
@@ -96,6 +98,7 @@ $(document).ready(function () {
       }
         })
       .catch((error) => {
+        $('.add-button').text(`Add`);
         $('.error-message').slideDown();
       });
 
