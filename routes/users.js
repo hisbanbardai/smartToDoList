@@ -44,7 +44,7 @@ router.post('/:id', (req, res) => {
     return res.redirect("/");
   }
 
-  editUser({name, email, password, id})
+  editUser({ name, email, password, id })
     .then((data) => {
       console.log(data);
       res.redirect("/");
