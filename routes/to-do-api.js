@@ -97,6 +97,12 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/:id", (req, res) => {
+  //check if user is logged in
+  let userId = req.session.user_id;
+  if (!userId) {
+    res.redirect("/");
+    return;
+  }
   const toDoId = req.params.id;
   const newCategoryId = req.body.category_id;
   const is_complete = req.body.is_complete;
