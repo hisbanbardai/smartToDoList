@@ -8,7 +8,7 @@
 const express = require('express');
 const router  = express.Router();
 const cookieSession = require('cookie-session');
-const { getUserById } = require('../db/queries/users');
+const { getUserById, editUser } = require('../db/queries/users');
 
 router.use(
   cookieSession({
@@ -21,12 +21,25 @@ router.get('/', (req, res) => {
   res.render('users');
 });
 
+// GET User Profile edit page
 router.get('/:id', (req, res) => {
   getUserById(req.session.user_id)
   .then((user) => {
     const templateVars = { user };
     res.render('profile', templateVars);
   })
+});
+
+// POST to update profile information in database
+router.post('/:id', (req, res) => {
+  const { name, email, password } = req.body;
+  const id = req.session.user_id;
+
+  editUser({name, email, password, id})
+    .then((data) => {
+      console.log(data);
+      res.redirect("/");
+    })
 });
 
 module.exports = router;

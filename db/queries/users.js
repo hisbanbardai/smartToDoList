@@ -74,9 +74,9 @@ const editUser = (user) => {
     }
   }
 
-  queryParams.
+  queryParams.push(user.id);
   queryString += `
-  WHERE id = $
+  WHERE id = $${queryParams.length}
   RETURNING *;`;
 
   return db.query(queryString, queryParams)
