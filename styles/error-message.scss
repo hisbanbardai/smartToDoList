@@ -1,11 +1,11 @@
 div.error-message {
   // display: none;
 
-  margin-bottom: 30px;
-  padding: 20px 30px;
+  width: 40%;
+  margin: 15px auto;
+  padding: 12px;
   background-color: #fce4e4;
-  border: 1px solid #fcc2c3;
+  border: 1px solid red;
   color: #cc0033;
-  font-size: 18px;
-  font-weight: 600;
+  font-weight: bold;
 }
