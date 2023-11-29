@@ -31,6 +31,7 @@ $(document).ready(function () {
     const element = `
     <div class='todo'>
     <h3>${todo.name}</h3>
+    <input type="checkbox" id="#mark-complete">
     <button class='delete-todo'>Delete</button>
     </div>
     `;
@@ -69,47 +70,50 @@ $(document).ready(function () {
         // Handle the failure, log the error
         console.log("Error:", textStatus, errorThrown);
       });
-      // .then(() => {
-      //   console.log("delete todo");
-      //   todoElement.remove();
-      // })
-      // .catch((error) => console.log("Error: ", error));
+    // .then(() => {
+    //   console.log("delete todo");
+    //   todoElement.remove();
+    // })
+    // .catch((error) => console.log("Error: ", error));
   });
 
   // Function to submit the form
   $("#myForm").on("submit", function (event) {
     event.preventDefault();
 
-    $('.add-button').text(`Sorting...`).prop('disabled', true);
+    $(".add-button").text(`Sorting...`).prop("disabled", true);
 
     // Slide up error message on click if open
-    $('.error-message').slideUp(function() {
-
+    $(".error-message").slideUp(function () {
       // Serialize the form data
       const todo = $("#myForm").serialize();
       console.log($(this).serialize());
 
       // Check if submission is empty
-      if (todo === 'text=') {
-        $('.add-button').text(`Add`).removeAttr('disabled');
-        $('.error-message').text(`Entry cannot be blank`).slideDown();
+      if (todo === "text=") {
+        $(".add-button").text(`Add`).removeAttr("disabled");
+        $(".error-message").text(`Entry cannot be blank`).slideDown();
       } else {
         // Make AJAX request
         $.post("/api/todo", todo)
           .then((data) => {
             console.log(data);
-            $('.add-button').text(`Add`).removeAttr('disabled');
+            $(".add-button").text(`Add`).removeAttr("disabled");
 
             // Show error if API replies with an error message
             if (data.message) {
-              $('.error-message').text(`Entry could not be categorized.`).slideDown();
+              $(".error-message")
+                .text(`Entry could not be categorized.`)
+                .slideDown();
             } else {
               $loadTodos();
             }
           })
           .catch((error) => {
-            $('.add-button').text(`Add`).removeAttr('disabled');
-            $('.error-message').text(`Server error - Please try again.`).slideDown();
+            $(".add-button").text(`Add`).removeAttr("disabled");
+            $(".error-message")
+              .text(`Server error - Please try again.`)
+              .slideDown();
           });
       }
 
@@ -125,7 +129,7 @@ $(document).ready(function () {
       method: "GET",
     })
       .done((data) => {
-          renderTodos(data);
+        renderTodos(data);
       })
       .fail((jqXHR, textStatus, errorThrown) => {
         if (jqXHR.status === 401) {
