@@ -1,6 +1,7 @@
 // Client facing scripts here
 
 $(document).ready(function () {
+
   const renderTodos = function (response) {
     const toDoCategory = {
       1: "watch-todo-list",
@@ -51,21 +52,21 @@ $(document).ready(function () {
   $(".todo-main-container").on("click", ".delete-button", function (event) {
     todoElement = $(this).parent();
     todo = todoElement.data("todo");
-
-    console.log("delete");
+    
+    console.log('delete');
     $("#overlay, #confirmationModal").fadeIn();
     $(".complete-question").hide();
     $(".delete-question").show();
 
     // Handle close button click
     $("#closeButton, #cancelButton").on("click", function () {
-      // Close the modal and uncheck checkbox
+    // Close the modal and uncheck checkbox
       $("#overlay, #confirmationModal").fadeOut();
     });
 
     // Handle confirm button click
-    $("#confirmButton").on("click", function () {
-      const todoId = todoElement.data("id");
+    $("#confirmButton").on("click", function() {
+      const todoId = todoElement.data('id');
 
       $.ajax({
         url: `/api/todo/delete/${todoId}`,
@@ -83,132 +84,54 @@ $(document).ready(function () {
           }
           // Handle the failure, log the error
           console.log("Error:", textStatus, errorThrown);
-        });
+      });
     });
   });
 
   // Function to edit a todo
-  $(".todo-main-container")
-    .on("click", ".edit-button", function(event) {
-      // Inititally dropdown value should be default
-      $("#categoryDropdown").val("default");
+  $(".todo-main-container").on("click", ".edit-button", function (event) {
+    // Get the to-do item ID from the data attribute
+    const todoElement = $(this).parent();
+    const todo = todoElement.data("todo");  
+    const todoId = todoElement.data('id');
 
-      // Get the to-do item ID from the data attribute
-      const todoElement = $(this).parent();
-      const todo = todoElement.data("todo");
-      const todoId = todoElement.data("id");
-      const todoCategoryId = todo.category_id;
-      let newCategoryId;
+    // Get the new category ID from the user using prompt
+    const newCategoryId = prompt("Enter new category ID:");
+    // $("#overlay, #editCategoryModal").fadeIn();
+    
+    // Send an Ajax request to update the to-do item
+    $.ajax({
+        url: `/api/todo/${todoId}`,
+        method: "POST",
+        data: { category_id: newCategoryId },
+        success: function (editedToDo) {
 
-      $("#overlay, #editCategoryModal").fadeIn();
+          editedToDo.category_id = newCategoryId;
+          editedToDo.name = todo.name;
 
-      $("#categoryDropdown")
-        .off("click")
-        .on("click", function (event) {
-          loadOptions();
-        });
+          const toDoCategory = {
+            1: "watch-todo-list",
+            2: "eat-todo-list",
+            3: "read-todo-list",
+            4: "buy-todo-list",
+          };
 
-      function loadOptions() {
-        // Get the dropdown element
-        let dropdown = $("#categoryDropdown");
+          // Get the jQuery element for the category list corresponding to the new category ID
+          const $todosList = $(`#${toDoCategory[newCategoryId]}`);
 
-        // Clear existing options before loading new ones
-        dropdown.empty();
+          // Remove todoEment in current category and append to the updated category
+          todoElement.remove();
+          const editedToDoElement = createToDoElement(editedToDo);
+          $todosList.append(editedToDoElement);
 
-        // // Add a default option and set it as selected and disabled
-        addOption(dropdown, "default", "Select a category");
-        dropdown
-          .find("option:eq(0)")
-          .prop("selected", true)
-          .prop("disabled", true);
+          console.log("To-do item edited successfully", editedToDo);
 
-        // Add additional options dynamically
-        $.get("/categories").done((data) => {
-          data.categories
-            .filter((ele) => ele.id !== todoCategoryId)
-            .map((ele) => {
-              addOption(dropdown, ele.id, ele.name);
-            });
-          
-          if (newCategoryId === null || newCategoryId === undefined) {
-            dropdown.val("default");
-          } else {
-            dropdown.val(newCategoryId);
-          }
-        });
-      }
-
-      // Function to add an option to the dropdown
-      function addOption(selectElement, value, text) {
-        let option = $("<option></option>").attr("value", value).text(text);
-        selectElement.append(option);
-      }
-
-      $("#categoryDropdown")
-        .off("change")
-        .on("change", function (event) {
-          console.log(this);
-          newCategoryId = $(this).val();
-        });
-
-      // Handle close button click
-      $("#editCategory-closeButton, #editCategory-cancelButton").on(
-        "click",
-        function() {
-          // Reset newCategoryId to null
-          newCategoryId = null;
-          // Close the modal
-          $("#overlay, #editCategoryModal").fadeOut();
-        }
-      );
-
-      //Handle confirm button click
-      $("#editCategory-confirmButton").on("click", function () {
-        if (newCategoryId === undefined || newCategoryId === null) {
-          console.log("Please select a category.");
-        } else {
-          updateToDoCategory();
-          // Reset the dropdown selection to the default option after successful edit
-          $("#categoryDropdown").val("default");
-        }
-      });
-
-      function updateToDoCategory() {
-        // Send an Ajax request to update the to-do item
-        $.ajax({
-          url: `/api/todo/${todoId}`,
-          method: "POST",
-          data: { category_id: newCategoryId, is_complete: false },
-          success: function (editedToDo) {
-            editedToDo.category_id = newCategoryId;
-            editedToDo.name = todo.name;
-
-            const toDoCategory = {
-              1: "watch-todo-list",
-              2: "eat-todo-list",
-              3: "read-todo-list",
-              4: "buy-todo-list",
-            };
-
-            // Get the jQuery element for the category list corresponding to the new category ID
-            const $todosList = $(`#${toDoCategory[newCategoryId]}`);
-
-            // Remove todoEment in current category and append to the updated category
-            todoElement.remove();
-            const editedToDoElement = createToDoElement(editedToDo);
-            $todosList.append(editedToDoElement);
-
-            console.log("To-do item edited successfully", editedToDo);
-
-            $("#overlay, #editCategoryModal").fadeOut(0.1);
-            $loadTodos();
-          },
-          error: function (error) {
-            console.error("Error editing to-do item", error);
-          },
-        });
-      }
+        },
+        error: function (error) {
+          console.error("Error editing to-do item", error);
+        },
     });
+});
 
   // Function to submit the form
   $("#myForm").on("submit", function (event) {
@@ -276,8 +199,8 @@ $(document).ready(function () {
   });
 
   //Handle confirm button click
-  $("#confirmButton").on("click", function () {
-    const todoId = todoElement.data("id");
+  $("#confirmButton").on("click", function() {
+    const todoId = todoElement.data('id');
 
     todo.is_complete = true;
     $.ajax({
