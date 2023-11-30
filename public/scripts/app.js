@@ -51,10 +51,6 @@ $(document).ready(function () {
   //Function to delete a todo
   $(".todo-main-container").on("click", ".delete-todo", function (event) {
     const todoElement = $(this).parent();
-  
-    // const todo = todoElement.data("todo");
-  
-
     const todoId = todoElement.data('id');
     
     console.log('delete');
@@ -194,11 +190,11 @@ $(document).ready(function () {
 
   //Handle confirm button click
   $("#confirmButton").on("click", function() {
-    const todoId = todoElement.data('id');
+    // const todoId = todoElement.data('id');
 
     todo.is_complete = true;
     $.ajax({
-      url: `/api/todo/${todoId}`,
+      url: `/api/todo/${todo.id}`,
       method: "POST",
       data: todo,
     })
