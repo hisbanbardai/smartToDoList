@@ -81,20 +81,18 @@
 
       <div class="modal" id="editCategoryModal">
         <div class="modal-content">
-          <span class="close-button" id="closeButton">&times;</span>
+          <span class="close-button" id="editCategory-closeButton">&times;</span>
           <div class="modal-header">
-            <h2>Select Category</h2>
+            <h2>Edit Category</h2>
           </div>
           <div class="modal-body">
             <select class="form-control" id="categoryDropdown">
-              <option value="category1">Category 1</option>
-              <option value="category2">Category 2</option>
-              <option value="category3">Category 3</option>
+              <option value="default" disabled selected>Select a category</option>
             </select>
           </div>
           <div class="modal-footer">
-            <button class="cancel-button" id="cancelButton">Cancel</button>
-            <button class="confirm-button" id="confirmButton">Confirm</button>
+            <button class="cancel-button" id="editCategory-cancelButton">Cancel</button>
+            <button class="confirm-button" id="editCategory-confirmButton">Confirm</button>
           </div>
         </div>
       </div>
