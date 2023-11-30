@@ -16,4 +16,10 @@ const getCategoryByName = (name) => {
     });
 };
 
-module.exports = { getCategoryByName };
+const getCategories = () => {
+  return db.query("SELECT * FROM categories;").then((data) => {
+    return data.rows;
+  });
+};
+
+module.exports = { getCategoryByName, getCategories };

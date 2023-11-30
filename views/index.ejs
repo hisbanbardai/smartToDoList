@@ -1,85 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Smart To Do List</title>
 
-<head>
-  <title>Smart To Do List</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta charset="UTF-8" >
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" />
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="/styles/layout.css" />
+    <link rel="stylesheet" href="/styles/error-message.css" />
+    <link rel="stylesheet" href="/styles/confirmation-modal.css" />
 
-  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
-  <link rel="stylesheet" href="/vendor/border-box.css" />
-  <link rel="stylesheet" href="/styles/main.css" />
-  <link rel="stylesheet" href="/styles/layout.css" />
-  <link rel="stylesheet" href="/styles/error-message.css" />
-  <link rel="stylesheet" href="/styles/confirmation-modal.css" />
+    <script src="/vendor/jquery-3.0.0.js"></script>
+    <script defer src="/scripts/app.js"></script>
+  </head>
 
-  <script src="/vendor/jquery-3.0.0.js"></script>
-  <script defer src="/scripts/app.js"></script>
-</head>
+  <body>
+    <header>
+      <%- include('partials/_navBar') %>
 
-<body>
-  <header>
-    <%- include('partials/_navBar') %>
+      <form action="/" method="POST" id="myForm">
+        <textarea
+          name="text"
+          id="todo-text"
+          wrap="soft"
+          placeholder="Add a todo here"
+        ></textarea>
+        <div>
+          <button class="add-button" type="submit">Add</button>
+        </div>
+      </form>
+      <div class="error-message"></div>
+    </header>
 
-    <form action="/" method="POST" id="myForm">
-      <textarea name="text" id="todo-text" wrap="soft" placeholder="Add a todo here"></textarea>
-      <div>
-        <button class="add-button" type="submit">Add</button>
+    <main class="todo-main-container">
+      <div class="category">
+        <h1 class="todo-list">To Watch</h1>
+        <div id="watch-todo-list"></div>
       </div>
-    </form>
-    <div class="error-message"></div>
-  </header>
 
-  <main class="todo-main-container">
-
-    <div class="category">
-      <h1 class="todo-list">To Watch</h1>
-      <div id="watch-todo-list">
+      <div class="category">
+        <h1 class="todo-list">To Eat</h1>
+        <div id="eat-todo-list"></div>
       </div>
-    </div>
 
-    <div class="category">
-      <h1 class="todo-list">To Eat</h1>
-      <div id="eat-todo-list">
+      <div class="category">
+        <h1 class="todo-list">To Read</h1>
+        <div id="read-todo-list"></div>
       </div>
-    </div>
 
-    <div class="category">
-      <h1 class="todo-list">To Read</h1>
-      <div id="read-todo-list">
+      <div class="category">
+        <h1 class="todo-list">To Buy</h1>
+        <div id="buy-todo-list"></div>
       </div>
-    </div>
 
-    <div class="category">
-      <h1 class="todo-list">To Buy</h1>
-      <div id="buy-todo-list">
-      </div>
-    </div>
-
-    <div class="overlay" id="overlay"></div>
-    <div class="modal" id="confirmationModal">
-      <div class="modal-content">
+      <div class="overlay" id="overlay"></div>
+      <div class="modal" id="confirmationModal">
+        <div class="modal-content">
           <span class="close-button" id="closeButton">&times;</span>
           <div class="modal-header">
-              <h2>Confirmation</h2>
+            <h2>Confirmation</h2>
           </div>
           <div class="modal-body">
-              <p class="complete-question">Are you sure you want to mark this item as complete?</p>
-              <p class="delete-question">Are you sure you want to delete this item?</p>
+            <p class="complete-question">
+              Are you sure you want to mark this item as complete?
+            </p>
+            <p class="delete-question">
+              Are you sure you want to delete this item?
+            </p>
           </div>
           <div class="modal-footer">
-              <button class="cancel-button" id="cancelButton">Cancel</button>
-              <button class="confirm-button" id="confirmButton">Confirm</button>
+            <button class="cancel-button" id="cancelButton">Cancel</button>
+            <button class="confirm-button" id="confirmButton">Confirm</button>
           </div>
+        </div>
       </div>
-    </div>
-  
-    
-  </main>
 
-
-</body>
-
+      <div class="modal" id="editCategoryModal">
+        <div class="modal-content">
+          <span class="close-button" id="editCategory-closeButton">&times;</span>
+          <div class="modal-header">
+            <h2>Edit Category</h2>
+          </div>
+          <div class="modal-body">
+            <select class="form-control" id="categoryDropdown">
+              <option value="default" disabled selected>Select a category</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button class="cancel-button" id="editCategory-cancelButton">Cancel</button>
+            <button class="confirm-button" id="editCategory-confirmButton">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>
