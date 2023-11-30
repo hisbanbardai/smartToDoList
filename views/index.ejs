@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
   <link rel="stylesheet" href="/styles/error-message.css" />
+  <link rel="stylesheet" href="/styles/confirmation-modal.css" />
 
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
@@ -33,30 +34,47 @@
 
   <main class="todo-main-container">
 
-    <div id="to-watch-category" class="category1">
+    <div id="to-watch-category" class="category">
       <h1>To watch</h1>
-      <div id="watch-todo-list" class="todo">
+      <div id="watch-todo-list" class="todo-list">
         <!-- <h3> To do 1</h3> -->
       </div>
     </div>
 
-    <div class="category2">
+    <div class="category">
       <h1>To eat</h1>
-      <div id="eat-todo-list" class="todo">
+      <div id="eat-todo-list" class="todo-list">
       </div>
     </div>
 
-    <div class="category3">
+    <div class="category">
       <h1>To read</h1>
-      <div id="read-todo-list" class="todo">
+      <div id="read-todo-list" class="todo-list">
       </div>
     </div>
 
-    <div class="category4">
+    <div class="category">
       <h1>To buy</h1>
-      <div id="buy-todo-list" class="todo">
+      <div id="buy-todo-list" class="todo-list">
       </div>
     </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="modal" id="confirmationModal">
+    <div class="modal-content">
+        <span class="close-button" id="closeButton">&times;</span>
+        <div class="modal-header">
+            <h2>Confirmation</h2>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to mark this to-do item as complete?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="cancel-button" id="cancelButton">Cancel</button>
+            <button class="confirm-button" id="confirmButton">Confirm</button>
+        </div>
+    </div>
+</div>
 
   </main>
 

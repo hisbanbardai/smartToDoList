@@ -98,7 +98,6 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/:id", (req, res) => {
-  console.log("hello edit")
   //check if user is logged in
   let userId = req.session.user_id;
   if (!userId) {
@@ -108,8 +107,11 @@ router.post("/:id", (req, res) => {
   const toDoId = req.params.id;
   const newCategoryId = req.body.category_id;
   const is_complete = req.body.is_complete;
+  const newCategoryId = req.body.category_id;
+  const is_complete = req.body.is_complete;
 
   toDoQueries
+    .editToDo({ id: toDoId, category_id: newCategoryId, is_complete: is_complete })
     .editToDo({ id: toDoId, category_id: newCategoryId, is_complete: is_complete })
     .then((editedToDo) => {
       // Check if a to-do item was edited

@@ -116,7 +116,9 @@ $(document).ready(function () {
           const editedToDoElement = createToDoElement(editedToDo);
           $todosList.append(editedToDoElement);
 
+
           console.log("To-do item edited successfully", editedToDo);
+
 
         },
         error: function (error) {
@@ -130,8 +132,10 @@ $(document).ready(function () {
     event.preventDefault();
 
     $(".add-button").text(`Sorting...`).prop("disabled", true);
+    $(".add-button").text(`Sorting...`).prop("disabled", true);
 
     // Slide up error message on click if open
+    $(".error-message").slideUp(function () {
     $(".error-message").slideUp(function () {
       // Serialize the form data
       const todo = $("#myForm").serialize();
@@ -141,15 +145,22 @@ $(document).ready(function () {
       if (todo === "text=") {
         $(".add-button").text(`Add`).removeAttr("disabled");
         $(".error-message").text(`Entry cannot be blank`).slideDown();
+      if (todo === "text=") {
+        $(".add-button").text(`Add`).removeAttr("disabled");
+        $(".error-message").text(`Entry cannot be blank`).slideDown();
       } else {
         // Make AJAX request
         $.post("/api/todo", todo)
           .then((data) => {
             console.log(data);
             $(".add-button").text(`Add`).removeAttr("disabled");
+            $(".add-button").text(`Add`).removeAttr("disabled");
 
             // Show error if API replies with an error message
             if (data.message) {
+              $(".error-message")
+                .text(`Entry could not be categorized.`)
+                .slideDown();
               $(".error-message")
                 .text(`Entry could not be categorized.`)
                 .slideDown();
@@ -158,6 +169,10 @@ $(document).ready(function () {
             }
           })
           .catch((error) => {
+            $(".add-button").text(`Add`).removeAttr("disabled");
+            $(".error-message")
+              .text(`Server error - Please try again.`)
+              .slideDown();
             $(".add-button").text(`Add`).removeAttr("disabled");
             $(".error-message")
               .text(`Server error - Please try again.`)
@@ -190,8 +205,6 @@ $(document).ready(function () {
 
   //Handle confirm button click
   $("#confirmButton").on("click", function() {
-    // const todoId = todoElement.data('id');
-
     todo.is_complete = true;
     $.ajax({
       url: `/api/todo/${todo.id}`,
@@ -217,6 +230,7 @@ $(document).ready(function () {
       method: "GET",
     })
       .done((data) => {
+        renderTodos(data);
         renderTodos(data);
       })
       .fail((jqXHR, textStatus, errorThrown) => {
