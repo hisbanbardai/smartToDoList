@@ -45,6 +45,7 @@ const loginRoutes = require('../routes/login');
 const logoutRoutes = require('../routes/logout');
 const signUpRoutes = require('../routes/sign-up');
 const toDoApiRoutes = require('../routes/to-do-api');
+const categoriesRoutes = require("../routes/categories");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -56,6 +57,7 @@ app.use('/login', loginRoutes);
 app.use('/logout', logoutRoutes);
 app.use('/sign-up', signUpRoutes);
 app.use('/api/todo', toDoApiRoutes);
+app.use('/categories', categoriesRoutes);
 // Note: mount other resources here, using the same pattern above
 
 // Home page
