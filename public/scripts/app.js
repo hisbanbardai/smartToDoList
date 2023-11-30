@@ -78,23 +78,18 @@ $(document).ready(function () {
   $(".todo-main-container").on("click", ".edit-button", function (event) {
     // Get the to-do item ID from the data attribute
     const todoElement = $(this).parent();
-    const todo = todoElement.data("todo");
-  
-    console.log("edit");
-
+    const todo = todoElement.data("todo");  
     const todoId = todoElement.data('id');
 
     // Get the new category ID from the user using prompt
     const newCategoryId = prompt("Enter new category ID:");
     
-
     // Send an Ajax request to update the to-do item
     $.ajax({
         url: `/api/todo/${todoId}`,
         method: "POST",
         data: { category_id: newCategoryId },
         success: function (editedToDo) {
-
 
           editedToDo.category_id = newCategoryId;
           editedToDo.name = todo.name;
@@ -188,9 +183,11 @@ $(document).ready(function () {
 
   //Handle confirm button click
   $("#confirmButton").on("click", function() {
+    const todoId = todoElement.data('id');
+
     todo.is_complete = true;
     $.ajax({
-      url: `/api/todo/${todo.id}`,
+      url: `/api/todo/${todoId}`,
       method: "POST",
       data: todo,
     })
