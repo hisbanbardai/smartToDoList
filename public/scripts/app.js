@@ -97,6 +97,7 @@ $(document).ready(function () {
 
     // Get the new category ID from the user using prompt
     const newCategoryId = prompt("Enter new category ID:");
+    // $("#overlay, #editCategoryModal").fadeIn();
     
     // Send an Ajax request to update the to-do item
     $.ajax({
