@@ -50,28 +50,42 @@ $(document).ready(function () {
 
   //Function to delete a todo
   $(".todo-main-container").on("click", ".delete-button", function (event) {
-    const todoElement = $(this).parent();
-    const todoId = todoElement.data('id');
+    todoElement = $(this).parent();
+    todo = todoElement.data("todo");
     
     console.log('delete');
+    $("#overlay, #confirmationModal").fadeIn();
+    $(".complete-question").hide();
+    $(".delete-question").show();
 
-    $.ajax({
-      url: `/api/todo/delete/${todoId}`,
-      type: "POST",
-    })
-      .done((data) => {
-        console.log("delete todo", data);
-        todoElement.remove();
+    // Handle close button click
+    $("#closeButton, #cancelButton").on("click", function () {
+    // Close the modal and uncheck checkbox
+      $("#overlay, #confirmationModal").fadeOut();
+    });
+
+    // Handle confirm button click
+    $("#confirmButton").on("click", function() {
+      const todoId = todoElement.data('id');
+
+      $.ajax({
+        url: `/api/todo/delete/${todoId}`,
+        type: "POST",
       })
-      .fail((jqXHR, textStatus, errorThrown) => {
-        if (jqXHR.status === 404) {
-          $("body").html(
-            "<html><body><h3>You are not logged in. Please <a href='/login'>login</a> or <a href='/sign-up'>register</a> first.</h3></body></html>\n"
-          );
-        }
-        // Handle the failure, log the error
-        console.log("Error:", textStatus, errorThrown);
+        .done((data) => {
+          console.log("delete todo", data);
+          todoElement.remove();
+        })
+        .fail((jqXHR, textStatus, errorThrown) => {
+          if (jqXHR.status === 404) {
+            $("body").html(
+              "<html><body><h3>You are not logged in. Please <a href='/login'>login</a> or <a href='/sign-up'>register</a> first.</h3></body></html>\n"
+            );
+          }
+          // Handle the failure, log the error
+          console.log("Error:", textStatus, errorThrown);
       });
+    });
   });
 
   // Function to edit a todo
@@ -171,6 +185,8 @@ $(document).ready(function () {
     if (this.checked) {
       // Show the modal when the checkbox is checked
       $("#overlay, #confirmationModal").fadeIn();
+      $(".complete-question").show();
+      $(".delete-question").hide();
     }
   });
 
