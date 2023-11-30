@@ -29,11 +29,13 @@ $(document).ready(function () {
   };
 
   const createToDoElement = function (todo) {
+    console.log(todo);
     const element = `
-    <div class='todo'>
+    <div class='todo' data-id=${todo.id || todo.editedToDo[0].id}>
     <h3 class='todo-text'>${todo.name}</h3>
+    <input type="checkbox" class="mark-complete">
     <button class='delete-todo'>Delete</button>
-    <button class='edit-todo'>Edit</button>
+    <button class='edit-todo' >Edit</button>
     </div>
     `;
     return $(element).data("todo", todo);
@@ -49,16 +51,22 @@ $(document).ready(function () {
   //Function to delete a todo
   $(".todo-main-container").on("click", ".delete-todo", function (event) {
     const todoElement = $(this).parent();
-    console.log(todoElement);
-    const todo = todoElement.data("todo");
-    console.log(todo);
+  
+    // const todo = todoElement.data("todo");
+  
+
+    const todoId = todoElement.data('id');
+    
+    console.log('delete');
+
+
 
     $.ajax({
-      url: `/api/todo/${todo.id}`,
-      type: "DELETE",
+      url: `/api/todo/delete/${todoId}`,
+      type: "POST",
     })
       .done((data) => {
-        console.log("delete todo");
+        console.log("delete todo", data);
         todoElement.remove();
       })
       .fail((jqXHR, textStatus, errorThrown) => {
@@ -74,44 +82,46 @@ $(document).ready(function () {
 
   // Function to edit a todo
   $(".todo-main-container").on("click", ".edit-todo", function (event) {
-    console.log("editing");
     // Get the to-do item ID from the data attribute
     const todoElement = $(this).parent();
-    console.log(todoElement);
     const todo = todoElement.data("todo");
-    console.log(todo);
+  
+    console.log("edit");
+
+    const todoId = todoElement.data('id');
 
     // Get the new category ID from the user using prompt
     const newCategoryId = prompt("Enter new category ID:");
+    
 
     // Send an Ajax request to update the to-do item
     $.ajax({
-        url: `/api/todo/${todo.id}`,
+        url: `/api/todo/${todoId}`,
         method: "POST",
-        data: { categoryId: newCategoryId },
+        data: { category_id: newCategoryId },
         success: function (editedToDo) {
-      
-          // Update UI after editing
+
+
+          editedToDo.category_id = newCategoryId;
+          editedToDo.name = todo.name;
+
           const toDoCategory = {
             1: "watch-todo-list",
             2: "eat-todo-list",
             3: "read-todo-list",
             4: "buy-todo-list",
           };
-          
-          const $todosList = $(`#${toDoCategory[editedToDo.category_id]}`);
 
-          // Remove the existing to-do item from the UI
+          // Get the jQuery element for the category list corresponding to the new category ID
+          const $todosList = $(`#${toDoCategory[newCategoryId]}`);
+
+          // Remove todoEment in current category and append to the updated category
           todoElement.remove();
-    
-          // Create a new element for the edited to-do
           const editedToDoElement = createToDoElement(editedToDo);
-    
-          // Append the new element to the correct category list
           $todosList.append(editedToDoElement);
-    
+
           console.log("To-do item edited successfully", editedToDo);
-    
+
         },
         error: function (error) {
           console.error("Error editing to-do item", error);
@@ -123,41 +133,84 @@ $(document).ready(function () {
   $("#myForm").on("submit", function (event) {
     event.preventDefault();
 
-    $('.add-button').text(`Sorting...`).prop('disabled', true);
+    $(".add-button").text(`Sorting...`).prop("disabled", true);
 
     // Slide up error message on click if open
-    $('.error-message').slideUp(function() {
-
+    $(".error-message").slideUp(function () {
       // Serialize the form data
       const todo = $("#myForm").serialize();
       console.log($(this).serialize());
 
       // Check if submission is empty
-      if (todo === 'text=') {
-        $('.add-button').text(`Add`).removeAttr('disabled');
-        $('.error-message').text(`Entry cannot be blank`).slideDown();
+      if (todo === "text=") {
+        $(".add-button").text(`Add`).removeAttr("disabled");
+        $(".error-message").text(`Entry cannot be blank`).slideDown();
       } else {
         // Make AJAX request
         $.post("/api/todo", todo)
           .then((data) => {
             console.log(data);
-            $('.add-button').text(`Add`).removeAttr('disabled');
+            $(".add-button").text(`Add`).removeAttr("disabled");
 
             // Show error if API replies with an error message
             if (data.message) {
-              $('.error-message').text(`Entry could not be categorized.`).slideDown();
+              $(".error-message")
+                .text(`Entry could not be categorized.`)
+                .slideDown();
             } else {
               $loadTodos();
             }
           })
           .catch((error) => {
-            $('.add-button').text(`Add`).removeAttr('disabled');
-            $('.error-message').text(`Server error - Please try again.`).slideDown();
+            $(".add-button").text(`Add`).removeAttr("disabled");
+            $(".error-message")
+              .text(`Server error - Please try again.`)
+              .slideDown();
           });
       }
 
       $("#todo-text").val(""); // clear the text after submitting the form
     });
+  });
+
+  //Function to mark todo as complete
+  let todoElement, todo;
+  $(".todo-main-container").on("change", ".mark-complete", function () {
+    todoElement = $(this).parent();
+    todo = todoElement.data("todo");
+
+    if (this.checked) {
+      // Show the modal when the checkbox is checked
+      $("#overlay, #confirmationModal").fadeIn();
+    }
+  });
+
+  // Handle close button click
+  $("#closeButton, #cancelButton").on("click", function () {
+    // Close the modal and uncheck checkbox
+    $(".mark-complete").prop("checked", false);
+    $("#overlay, #confirmationModal").fadeOut();
+  });
+
+  //Handle confirm button click
+  $("#confirmButton").on("click", function() {
+    const todoId = todoElement.data('id');
+
+    todo.is_complete = true;
+    $.ajax({
+      url: `/api/todo/${todoId}`,
+      method: "POST",
+      data: todo,
+    })
+      .done((data) => {
+        // Close the modal
+        $("#overlay, #confirmationModal").fadeOut(0.1);
+        $loadTodos();
+      })
+      .fail((jqXHR, textStatus, errorThrown) => {
+        // Handle the failure, log the error
+        console.log("Error:", textStatus, errorThrown);
+      });
   });
 
   // Function to load todos
@@ -168,7 +221,7 @@ $(document).ready(function () {
       method: "GET",
     })
       .done((data) => {
-          renderTodos(data);
+        renderTodos(data);
       })
       .fail((jqXHR, textStatus, errorThrown) => {
         if (jqXHR.status === 401) {

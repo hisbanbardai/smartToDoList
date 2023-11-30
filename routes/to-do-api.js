@@ -83,6 +83,7 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
+  console.log("Good morning");
   const userId = req.params.id;
 
   toDoQueries
@@ -97,16 +98,25 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/:id", (req, res) => {
+  console.log("hello edit")
+  //check if user is logged in
+  let userId = req.session.user_id;
+  if (!userId) {
+    res.redirect("/");
+    return;
+  }
   const toDoId = req.params.id;
-  const newCategoryId = req.body.categoryId;
+  const newCategoryId = req.body.category_id;
+  const is_complete = req.body.is_complete;
 
   toDoQueries
-    .editToDo({ id: toDoId, category_id: newCategoryId })
+    .editToDo({ id: toDoId, category_id: newCategoryId, is_complete: is_complete })
     .then((editedToDo) => {
       // Check if a to-do item was edited
+      console.log(editedToDo);
       if (editedToDo.length > 0) {
         console.log('To-do item edited successfully', editedToDo);
-        res.redirect('/')
+        res.status(200).json({ editedToDo });
       } else {
         res.status(404).json({ error: 'To-do item not found' });
       }
@@ -117,8 +127,8 @@ router.post("/:id", (req, res) => {
 });
 
 
-router.delete("/:id", (req,res) => {
-  console.log('Hello')
+router.post("/delete/:id", (req,res) => {
+  console.log('Hello, delete')
   const toDoId = req.params.id;
   let userId = req.session.user_id;
   if (!userId) {
