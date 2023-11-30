@@ -25,6 +25,14 @@ body {
     z-index: 2;
 }
 
+
+input[type=checkbox] {
+    margin-bottom: 12px;
+    line-height: normal;
+    width: 25px;
+    height: 25px;
+}
+
 .modal-content {
     // background-color: #fff;
     padding: 20px;
@@ -33,7 +41,7 @@ body {
     max-width: 400px;
     width: 100%;
     text-align: center;
-     background-color: rgba(255, 255, 255, 1);
+    background-color: rgba(255, 255, 255, 1);
 }
 
 .close-button {
@@ -71,6 +79,6 @@ body {
 }
 
 .confirm-button {
-    background-color: #4CAF50;
+    background-color: #A4969B;
     color: #fff;
 }

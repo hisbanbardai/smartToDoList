@@ -29,14 +29,13 @@ $(document).ready(function () {
   };
 
   const createToDoElement = function (todo) {
+    console.log(todo);
     const element = `
-    <div class='todo'>
+    <div class='todo' data-id=${todo.id || todo.editedToDo[0].id}>
     <h3 class='todo-text'>${todo.name}</h3>
-    <div class='todo-inputs'>
       <input type="checkbox" class="mark-complete">
-      <button class='todo-button'>Delete</button>
-      <button class='todo-button'>Edit</button>
-    </div>
+      <button class='delete-button'>Delete</button>
+      <button class='edit-button'>Edit</button>
     </div>
     `;
     return $(element).data("todo", todo);
@@ -50,51 +49,65 @@ $(document).ready(function () {
   // };
 
   //Function to delete a todo
-  $(".todo-main-container").on("click", ".delete-todo", function (event) {
-    const todoElement = $(this).parent();
-    console.log(todoElement);
-    const todo = todoElement.data("todo");
-    console.log(todo);
+  $(".todo-main-container").on("click", ".delete-button", function (event) {
+    todoElement = $(this).parent();
+    todo = todoElement.data("todo");
+    
+    console.log('delete');
+    $("#overlay, #confirmationModal").fadeIn();
+    $(".complete-question").hide();
+    $(".delete-question").show();
 
-    $.ajax({
-      url: `/api/todo/${todo.id}`,
-      type: "DELETE",
-    })
-      .done((data) => {
-        console.log("delete todo");
-        todoElement.remove();
+    // Handle close button click
+    $("#closeButton, #cancelButton").on("click", function () {
+    // Close the modal and uncheck checkbox
+      $("#overlay, #confirmationModal").fadeOut();
+    });
+
+    // Handle confirm button click
+    $("#confirmButton").on("click", function() {
+      const todoId = todoElement.data('id');
+
+      $.ajax({
+        url: `/api/todo/delete/${todoId}`,
+        type: "POST",
       })
-      .fail((jqXHR, textStatus, errorThrown) => {
-        if (jqXHR.status === 404) {
-          $("body").html(
-            "<html><body><h3>You are not logged in. Please <a href='/login'>login</a> or <a href='/sign-up'>register</a> first.</h3></body></html>\n"
-          );
-        }
-        // Handle the failure, log the error
-        console.log("Error:", textStatus, errorThrown);
+        .done((data) => {
+          console.log("delete todo", data);
+          todoElement.remove();
+        })
+        .fail((jqXHR, textStatus, errorThrown) => {
+          if (jqXHR.status === 404) {
+            $("body").html(
+              "<html><body><h3>You are not logged in. Please <a href='/login'>login</a> or <a href='/sign-up'>register</a> first.</h3></body></html>\n"
+            );
+          }
+          // Handle the failure, log the error
+          console.log("Error:", textStatus, errorThrown);
       });
+    });
   });
 
   // Function to edit a todo
-  $(".todo-main-container").on("click", ".edit-todo", function (event) {
-    console.log("editing");
+  $(".todo-main-container").on("click", ".edit-button", function (event) {
     // Get the to-do item ID from the data attribute
     const todoElement = $(this).parent();
-    console.log(todoElement);
-    const todo = todoElement.data("todo");
-    console.log(todo);
+    const todo = todoElement.data("todo");  
+    const todoId = todoElement.data('id');
 
     // Get the new category ID from the user using prompt
     const newCategoryId = prompt("Enter new category ID:");
-
+    
     // Send an Ajax request to update the to-do item
     $.ajax({
-        url: `/api/todo/${todo.id}`,
+        url: `/api/todo/${todoId}`,
         method: "POST",
-        data: { categoryId: newCategoryId },
+        data: { category_id: newCategoryId },
         success: function (editedToDo) {
 
-          // Update UI after editing
+          editedToDo.category_id = newCategoryId;
+          editedToDo.name = todo.name;
+
           const toDoCategory = {
             1: "watch-todo-list",
             2: "eat-todo-list",
@@ -102,15 +115,12 @@ $(document).ready(function () {
             4: "buy-todo-list",
           };
 
-          const $todosList = $(`#${toDoCategory[editedToDo.category_id]}`);
+          // Get the jQuery element for the category list corresponding to the new category ID
+          const $todosList = $(`#${toDoCategory[newCategoryId]}`);
 
-          // Remove the existing to-do item from the UI
+          // Remove todoEment in current category and append to the updated category
           todoElement.remove();
-
-          // Create a new element for the edited to-do
           const editedToDoElement = createToDoElement(editedToDo);
-
-          // Append the new element to the correct category list
           $todosList.append(editedToDoElement);
 
           console.log("To-do item edited successfully", editedToDo);
@@ -175,6 +185,8 @@ $(document).ready(function () {
     if (this.checked) {
       // Show the modal when the checkbox is checked
       $("#overlay, #confirmationModal").fadeIn();
+      $(".complete-question").show();
+      $(".delete-question").hide();
     }
   });
 
@@ -187,9 +199,11 @@ $(document).ready(function () {
 
   //Handle confirm button click
   $("#confirmButton").on("click", function() {
+    const todoId = todoElement.data('id');
+
     todo.is_complete = true;
     $.ajax({
-      url: `/api/todo/${todo.id}`,
+      url: `/api/todo/${todoId}`,
       method: "POST",
       data: todo,
     })

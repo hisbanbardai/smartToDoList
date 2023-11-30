@@ -83,6 +83,7 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
+  console.log("Good morning");
   const userId = req.params.id;
 
   toDoQueries
@@ -113,7 +114,7 @@ router.post("/:id", (req, res) => {
       // Check if a to-do item was edited
       if (editedToDo.length > 0) {
         console.log('To-do item edited successfully', editedToDo);
-        res.redirect('/')
+        res.status(200).json({ editedToDo });
       } else {
         res.status(404).json({ error: 'To-do item not found' });
       }
@@ -124,8 +125,8 @@ router.post("/:id", (req, res) => {
 });
 
 
-router.delete("/:id", (req,res) => {
-  console.log('Hello')
+router.post("/delete/:id", (req,res) => {
+  console.log('Hello, delete')
   const toDoId = req.params.id;
   let userId = req.session.user_id;
   if (!userId) {
