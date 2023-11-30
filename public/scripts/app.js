@@ -32,9 +32,11 @@ $(document).ready(function () {
     const element = `
     <div class='todo'>
     <h3 class='todo-text'>${todo.name}</h3>
-    <input type="checkbox" class="mark-complete">
-    <button class='delete-todo'>Delete</button>
-    <button class='edit-todo'>Edit</button>
+    <div class='todo-inputs'>
+      <input type="checkbox" class="mark-complete">
+      <button class='todo-button'>Delete</button>
+      <button class='todo-button'>Edit</button>
+    </div>
     </div>
     `;
     return $(element).data("todo", todo);
@@ -91,7 +93,7 @@ $(document).ready(function () {
         method: "POST",
         data: { categoryId: newCategoryId },
         success: function (editedToDo) {
-      
+
           // Update UI after editing
           const toDoCategory = {
             1: "watch-todo-list",
@@ -99,20 +101,20 @@ $(document).ready(function () {
             3: "read-todo-list",
             4: "buy-todo-list",
           };
-          
+
           const $todosList = $(`#${toDoCategory[editedToDo.category_id]}`);
 
           // Remove the existing to-do item from the UI
           todoElement.remove();
-    
+
           // Create a new element for the edited to-do
           const editedToDoElement = createToDoElement(editedToDo);
-    
+
           // Append the new element to the correct category list
           $todosList.append(editedToDoElement);
-    
+
           console.log("To-do item edited successfully", editedToDo);
-    
+
         },
         error: function (error) {
           console.error("Error editing to-do item", error);
