@@ -95,7 +95,7 @@ body {
     justify-content: space-evenly;
     margin-top: 50px;
 
-    .category1, .category2, .category3, .category4 {
+    .category {
       margin-top: 10px;
       border: 1px solid red;
       width: 20%;
@@ -104,6 +104,11 @@ body {
       h1 {
         display: flex;
         justify-content: center;
+      }
+
+      .todo-list {
+        display: flex;
+        flex-direction: column;
       }
 
       .todo {
