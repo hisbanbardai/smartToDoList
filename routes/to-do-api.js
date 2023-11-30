@@ -107,15 +107,11 @@ router.post("/:id", (req, res) => {
   const toDoId = req.params.id;
   const newCategoryId = req.body.category_id;
   const is_complete = req.body.is_complete;
-  const newCategoryId = req.body.category_id;
-  const is_complete = req.body.is_complete;
 
   toDoQueries
     .editToDo({ id: toDoId, category_id: newCategoryId, is_complete: is_complete })
-    .editToDo({ id: toDoId, category_id: newCategoryId, is_complete: is_complete })
     .then((editedToDo) => {
       // Check if a to-do item was edited
-      console.log(editedToDo);
       if (editedToDo.length > 0) {
         console.log('To-do item edited successfully', editedToDo);
         res.status(200).json({ editedToDo });
