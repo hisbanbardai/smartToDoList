@@ -95,7 +95,7 @@ body {
     justify-content: space-evenly;
     margin-top: 50px;
 
-    .category1, .category2, .category3, .category4 {
+    .category {
       margin-top: 10px;
       border: 1px solid red;
       width: 20%;
@@ -106,11 +106,29 @@ body {
         justify-content: center;
       }
 
+      .todo-list {
+        display: flex;
+        flex-direction: column;
+      }
+
       .todo {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
         border: 1px solid red;
         margin: 10px;
+
+        .todo-inputs {
+          padding-bottom: 18px;
+        }
+
+        .todo-button {
+          padding: 8px 30px;
+          margin: 0 5px;
+          font-size: 16px;
+          border-radius: 8px;
+          border: 2px solid #008CBA;;
+        }
       }
     }
   }
