@@ -32,6 +32,7 @@ $(document).ready(function () {
     const element = `
     <div class='todo'>
     <h3 class='todo-text'>${todo.name}</h3>
+    <input type="checkbox" class="mark-complete">
     <button class='delete-todo'>Delete</button>
     <button class='edit-todo'>Edit</button>
     </div>
@@ -123,41 +124,82 @@ $(document).ready(function () {
   $("#myForm").on("submit", function (event) {
     event.preventDefault();
 
-    $('.add-button').text(`Sorting...`).prop('disabled', true);
+    $(".add-button").text(`Sorting...`).prop("disabled", true);
 
     // Slide up error message on click if open
-    $('.error-message').slideUp(function() {
-
+    $(".error-message").slideUp(function () {
       // Serialize the form data
       const todo = $("#myForm").serialize();
       console.log($(this).serialize());
 
       // Check if submission is empty
-      if (todo === 'text=') {
-        $('.add-button').text(`Add`).removeAttr('disabled');
-        $('.error-message').text(`Entry cannot be blank`).slideDown();
+      if (todo === "text=") {
+        $(".add-button").text(`Add`).removeAttr("disabled");
+        $(".error-message").text(`Entry cannot be blank`).slideDown();
       } else {
         // Make AJAX request
         $.post("/api/todo", todo)
           .then((data) => {
             console.log(data);
-            $('.add-button').text(`Add`).removeAttr('disabled');
+            $(".add-button").text(`Add`).removeAttr("disabled");
 
             // Show error if API replies with an error message
             if (data.message) {
-              $('.error-message').text(`Entry could not be categorized.`).slideDown();
+              $(".error-message")
+                .text(`Entry could not be categorized.`)
+                .slideDown();
             } else {
               $loadTodos();
             }
           })
           .catch((error) => {
-            $('.add-button').text(`Add`).removeAttr('disabled');
-            $('.error-message').text(`Server error - Please try again.`).slideDown();
+            $(".add-button").text(`Add`).removeAttr("disabled");
+            $(".error-message")
+              .text(`Server error - Please try again.`)
+              .slideDown();
           });
       }
 
       $("#todo-text").val(""); // clear the text after submitting the form
     });
+  });
+
+  //Function to mark todo as complete
+  let todoElement, todo;
+  $(".todo-main-container").on("change", ".mark-complete", function () {
+    todoElement = $(this).parent();
+    todo = todoElement.data("todo");
+
+    if (this.checked) {
+      // Show the modal when the checkbox is checked
+      $("#overlay, #confirmationModal").fadeIn();
+    }
+  });
+
+  // Handle close button click
+  $("#closeButton, #cancelButton").on("click", function () {
+    // Close the modal and uncheck checkbox
+    $(".mark-complete").prop("checked", false);
+    $("#overlay, #confirmationModal").fadeOut();
+  });
+
+  //Handle confirm button click
+  $("#confirmButton").on("click", function() {
+    todo.is_complete = true;
+    $.ajax({
+      url: `/api/todo/${todo.id}`,
+      method: "POST",
+      data: todo,
+    })
+      .done((data) => {
+        // Close the modal
+        $("#overlay, #confirmationModal").fadeOut(0.1);
+        $loadTodos();
+      })
+      .fail((jqXHR, textStatus, errorThrown) => {
+        // Handle the failure, log the error
+        console.log("Error:", textStatus, errorThrown);
+      });
   });
 
   // Function to load todos
@@ -168,7 +210,7 @@ $(document).ready(function () {
       method: "GET",
     })
       .done((data) => {
-          renderTodos(data);
+        renderTodos(data);
       })
       .fail((jqXHR, textStatus, errorThrown) => {
         if (jqXHR.status === 401) {
