@@ -304,6 +304,8 @@ $(document).ready(function () {
       method: "GET",
     })
       .done((data) => {
+        const isReadonly = false; 
+        $(".todo-text").prop("readonly", isReadonly);
         renderTodos(data);
       })
       .fail((jqXHR, textStatus, errorThrown) => {
