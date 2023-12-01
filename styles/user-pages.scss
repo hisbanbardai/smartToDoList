@@ -1,0 +1,38 @@
+.flex {
+  display: flex;
+  justify-content: center;
+}
+
+.user-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #C4CAD0;
+  padding-bottom: 18px;
+
+  .form-control {
+    display: block;
+    width: 80%;
+    padding: 12px;
+    height: 45px;
+    border: 1px solid #C4CAD0;
+    border-radius: 4px;
+    margin: 10px auto;
+  }
+
+}
+
+.page-title {
+  text-align: center;
+  border-bottom: 1px solid #77685D;
+}
+
+.user-button {
+  background-color: #878C8F;
+  font-size: 20px;
+  padding: 8px 15px;
+  margin: 0 5px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid #878C8F
+}
