@@ -4,41 +4,39 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Bootstrap CSS -->
-  <link
-    rel="stylesheet"
-    href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-    crossorigin="anonymous"
-  />
+
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/user-pages.css" />
 
   <title>User Profile</title>
 </head>
 <body>
+
   <%- include('partials/_navBar') %>
-  <h3 class="m-3">Update Profile</h3>
-  <form method="POST" action="/users/<%= user.id %>">
-    <div class="m-3">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" value="<%= user.name %>" name="name" style="width: 250px;">
-      </div>
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" class="form-control" id="email" value="<%= user.email %>" name="email" style="width: 250px;">
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" value="<%= user.password %>" name="password" style="width: 250px;">
-      </div>
+
+  <form method="POST" action="/users/<%= user.id %>" class="user-form">
+    <div class="flex">
+      <h1 class="page-title">Update Profile</h1>
     </div>
-    <div class="m-3">
-      <button type="submit" class="btn btn-primary">Update</button>
+    <div>
+
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" value="<%= user.name %>" name="name" style="width: 250px;">
+
+      <label for="email">Email Address</label>
+      <input type="email" class="form-control" id="email" value="<%= user.email %>" name="email" style="width: 250px;">
+
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" value="<%= user.password %>" name="password" style="width: 250px;">
+
+    </div>
+    <div>
+      <button type="submit" class="user-button">Update</button>
     </div>
   </form>
+
 </body>
 </html>
