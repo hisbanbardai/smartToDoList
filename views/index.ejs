@@ -58,9 +58,9 @@
       </div>
 
       <div class="overlay" id="overlay"></div>
-      <div class="modal" id="confirmationModal">
+      <div class="modal" id="completeConfirmationModal">
         <div class="modal-content">
-          <span class="close-button" id="closeButton">&times;</span>
+          <span class="close-button" id="complete-closeButton">&times;</span>
           <div class="modal-header">
             <h2>Confirmation</h2>
           </div>
@@ -68,13 +68,28 @@
             <p class="complete-question">
               Are you sure you want to mark this item as complete?
             </p>
+          </div>
+          <div class="modal-footer">
+            <button class="cancel-button" id="complete-cancelButton">Cancel</button>
+            <button class="confirm-button" id="complete-confirmButton">Confirm</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="deleteConfirmationModal">
+        <div class="modal-content">
+          <span class="close-button" id="delete-closeButton">&times;</span>
+          <div class="modal-header">
+            <h2>Confirmation</h2>
+          </div>
+          <div class="modal-body">
             <p class="delete-question">
               Are you sure you want to delete this item?
             </p>
           </div>
           <div class="modal-footer">
-            <button class="cancel-button" id="cancelButton">Cancel</button>
-            <button class="confirm-button" id="confirmButton">Confirm</button>
+            <button class="cancel-button" id="delete-cancelButton">Cancel</button>
+            <button class="confirm-button" id="delete-confirmButton">Confirm</button>
           </div>
         </div>
       </div>
