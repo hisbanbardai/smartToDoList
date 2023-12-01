@@ -21,26 +21,29 @@
 </head>
 <body>
   <%- include('partials/_navBar') %>
-  <h3 class="m-3">Create Account</h3>
 
-  <form method="POST" action="/sign-up">
-    <div class="m-3">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" placeholder="Name" name="name" required style="width: 250px;">
+  <div class='main-page'>
+    <h3 class="m-3"><b>CREATE ACCOUNT</b></h3>
+
+    <form method="POST" action="/sign-up">
+      <div class="m-3">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" placeholder="Name" name="name" required style="width: 250px;">
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" class="form-control" id="email" placeholder="Email" name="email" required style="width: 250px;">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" placeholder="Password" name="password" required style="width: 250px;">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" class="form-control" id="email" placeholder="Email" name="email" required style="width: 250px;">
+      <div class="m-3">
+        <button type="submit" class="btn btn-primary">Sign Up</button>
       </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="Password" name="password" required style="width: 250px;">
-      </div>
-    </div>
-    <div class="m-3">
-      <button type="submit" class="btn btn-primary">Sign Up</button>
-    </div>
-  </form>
+    </form>
+</div>
 </body>
 </html>

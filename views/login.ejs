@@ -20,21 +20,27 @@
 </head>
 <body>
   <%- include('partials/_navBar') %> 
-  <h3 class="m-3">Login</h3>
-  <form method="POST" action="/login">
-    <div class="m-3">
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" class="form-control" id="email" placeholder="Email" name="email" required style="width: 250px;">
+
+  <div class='main-page'>
+
+    <h3 class="m-3"><b>LOGIN</b></h3>
+
+    <form method="POST" action="/login">
+      <div class="m-3">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" class="form-control" id="email" placeholder="Email" name="email" required style="width: 250px;">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" placeholder="Password" name="password" required style="width: 250px;">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="Password" name="password" required style="width: 250px;">
+      <div class="m-3">
+        <button type="submit" class="btn btn-primary">Login</button>
       </div>
-    </div>
-    <div class="m-3">
-      <button type="submit" class="btn btn-primary">Login</button>
-    </div>
-  </form>
+    </form>
+
+  </div>
 </body>
 </html>
