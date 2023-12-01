@@ -85,27 +85,31 @@ body {
         align-items: center;
         border: 1px solid #b4afab;
         border-radius: 10px;
-        // background-color: #FCF7FF;
+        background-color: #FCF7FF;
         margin: 10px;
 
         h3 {
           font-size: 24px;
         }
-      }
 
+        .todo-function-button {
+          padding-bottom: 20px;
+          padding-top: 5px;
+        }
 
         .edit-button, .delete-button {
           padding: 8px 15px;
           margin: 0 5px;
           font-size: 15px;
           border-radius: 8px;
-          border: 2px solid #A4969B;
-          background-color: #FCF7FF;
+          border: 2px solid #C4CAD0;
+          background-color: #C4CAD0;
           cursor: pointer;
         }
-      }
+      }   
     }
   }
+}
 
 
 
