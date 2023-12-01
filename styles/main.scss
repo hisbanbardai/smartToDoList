@@ -83,29 +83,35 @@ body {
         display: flex;
         flex-direction: column;
         align-items: center;
-        border: 1px solid #b4afab;
+        border: 1px solid rgba(164, 150, 155, 0.1);
         border-radius: 10px;
-        // background-color: #FCF7FF;
         margin: 10px;
+        // background-color: rgba(252, 247, 255, 0.4);
+        background-color: rgba(164, 150, 155, 0.2);
+
 
         h3 {
           font-size: 24px;
         }
-      }
 
+        .todo-function-button {
+          padding-bottom: 20px;
+          padding-top: 5px;
+        }
 
         .edit-button, .delete-button {
           padding: 8px 15px;
           margin: 0 5px;
           font-size: 15px;
           border-radius: 8px;
-          border: 2px solid #A4969B;
-          background-color: #FCF7FF;
+          border: 2px solid rgba(196, 202, 208, 0.8);
+          background-color: rgba(196, 202, 208, 0.5);
           cursor: pointer;
         }
-      }
+      }   
     }
   }
+}
 
 
 
@@ -116,3 +122,20 @@ body {
   // @media (min-width:760px) {
 
   // }
+
+
+
+  @media (max-width:759px) {
+
+    main {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    
+    .category {
+      display: flex;
+      flex-direction: row;
+    }
+
+  }

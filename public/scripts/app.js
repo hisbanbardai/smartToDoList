@@ -33,8 +33,10 @@ $(document).ready(function () {
     <div class='todo' data-id=${todo.id || todo.editedToDo[0].id}>
     <h3 class='todo-text'>${todo.name}</h3>
       <input type="checkbox" class="mark-complete" style="cursor: pointer;">
+      <div class='todo-function-button'>
       <button class='delete-button'>Delete</button>
       <button class='edit-button'>Edit</button>
+      </div>
     </div>
     `;
     return $(element).data("todo", todo);
@@ -50,7 +52,7 @@ $(document).ready(function () {
 
   //Function to delete a todo
   $(".todo-main-container").on("click", ".delete-button", function (event) {
-    todoElement = $(this).parent();
+    todoElement = $(this).closest('.todo');
     todo = todoElement.data("todo");
 
     console.log("delete");
@@ -96,7 +98,7 @@ $(document).ready(function () {
     $("#categoryDropdown").val("default");
 
     // Get the to-do item ID from the data attribute
-    const todoElement = $(this).parent();
+    const todoElement = $(this).closest('.todo');
     const todo = todoElement.data("todo");
     const todoId = todoElement.data("id");
     const todoCategoryId = todo.category_id;
