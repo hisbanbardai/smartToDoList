@@ -6,6 +6,10 @@ html {
 
 }
 
+.logo-name h1 { 
+  font-weight: normal !important;
+}
+
 .nav-bar {
   display: flex;
   justify-content: space-between;
@@ -15,8 +19,15 @@ html {
   height: 100px;
   
 
+  .logo-name {
+    color: #483D3F; 
+    font-size: 24px; 
+    text-decoration: none; 
+  }
+
   h1 {
     padding: 0 30px;
+    font-size: 40px;
   }
 
   .nav-button {
@@ -36,12 +47,13 @@ html {
       margin-right: 15px;
       font-weight: bold;
       font-size: 24px;
+      color: #483D3F;;
 
       a {
         text-decoration: none;
-        color: black;
+        color: #483D3F;
         &:hover {
-          text-decoration: underline;
+          text-decoration: none;
         }
       }
     }
@@ -59,9 +71,7 @@ html {
     border: 2px solid #A4969B;
     border-radius: 20px;
     padding: 20px 40px;
-
   }
-  
 
   .m-3 button {
     display: flex;
