@@ -25,26 +25,23 @@
 
   <%- include('partials/_navBar') %>
 
-  <div class="flex">
-    <h1 class="page-title">Update Profile</h1>
-  </div>
-
   <form method="POST" action="/users/<%= user.id %>" class="user-form">
-    <div class="m-3">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" value="<%= user.name %>" name="name" style="width: 250px;">
-      </div>
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" class="form-control" id="email" value="<%= user.email %>" name="email" style="width: 250px;">
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" value="<%= user.password %>" name="password" style="width: 250px;">
-      </div>
+    <div class="flex">
+      <h1 class="page-title">Update Profile</h1>
     </div>
-    <div class="m-3">
+    <div>
+
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" value="<%= user.name %>" name="name" style="width: 250px;">
+
+      <label for="email">Email Address</label>
+      <input type="email" class="form-control" id="email" value="<%= user.email %>" name="email" style="width: 250px;">
+
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" value="<%= user.password %>" name="password" style="width: 250px;">
+
+    </div>
+    <div>
       <button type="submit" class="user-button">Update</button>
     </div>
   </form>
