@@ -23,14 +23,14 @@
       <%- include('partials/_navBar') %>
 
       <form action="/" method="POST" id="myForm">
-        <textarea
+        <textarea class="todo-text" readonly
           name="text"
           id="todo-text"
           wrap="soft"
           placeholder="Add a todo here"
         ></textarea>
         <div>
-          <button class="add-button" type="submit">Add</button>
+          <button class="add-button" type="submit">Add</button> 
         </div>
         <div class="error-message"></div>
       </form>
