@@ -40,6 +40,7 @@ $(document).ready(function () {
     return $(element).data("todo", todo);
   };
 
+
   // Define an escape function to safely escape HTML content
   // const escape = function(str) {
   //   let div = document.createElement("div");
@@ -307,9 +308,13 @@ $(document).ready(function () {
       })
       .fail((jqXHR, textStatus, errorThrown) => {
         if (jqXHR.status === 401) {
-          $("body").html(
-            "<html><body><h3>You are not logged in. Please <a href='/login'>login</a> or <a href='/sign-up'>register</a> first.</h3></body></html>\n"
-          );
+          const isReadonly = true; 
+          $(".todo-text").prop("readonly", isReadonly);
+          $("#myForm").on("submit", function (event) {
+            event.preventDefault(); 
+            $(".add-button").prop("disabled", true);  
+            $(".error-message").text(`You must login or sign up first.`);
+          });
         }
         // Handle the failure, log the error
         console.log("Error:", textStatus, errorThrown);
