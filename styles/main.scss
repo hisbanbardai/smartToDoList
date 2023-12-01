@@ -12,16 +12,18 @@ body {
   background-repeat: repeat; 
   
 
-@media (min-width:760px) {
-
-
   #myForm {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: #C4CAD0;
     min-height: 300px;
-
+    background-image: url('https://images.unsplash.com/photo-1644329843491-99edfc83de04?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    background-repeat: repeat;
+    background-position-y: 615px;
+    background-position-x: center;
+    opacity: 0.9;
 
     #todo-text {
       display: block;
@@ -30,17 +32,16 @@ body {
       height: 45px;
       border: 1px solid #C4CAD0;
       border-radius: 4px;
-      margin: 10px auto;
+      margin: 30px 0 10px 0;
     }
 
     .add-button {
       background-color: #878C8F;
-      font-size: 20px;
-      padding: 8px 30px;
-      margin: 0 5px;
-      font-size: 16px;
+      padding: 8px 55px;
+      margin: 0;
+      font-size: 18px;
       border-radius: 8px;
-      border: 2px solid #878C8F
+      border: 2px solid #878C8F;
     }
 
   }
@@ -106,7 +107,10 @@ body {
 
 
 
-  }
+  
 
 
 
+  // @media (min-width:760px) {
+
+  // }

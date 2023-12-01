@@ -7,7 +7,7 @@ html {
 }
 
 .logo-name h1 { 
-  font-weight: normal !important;
+  font-weight: bold !important;
 }
 
 .nav-bar {
@@ -52,9 +52,6 @@ html {
       a {
         text-decoration: none;
         color: #483D3F;
-        &:hover {
-          text-decoration: none;
-        }
       }
     }
   }
