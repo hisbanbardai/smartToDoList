@@ -32,7 +32,7 @@ $(document).ready(function () {
     const element = `
     <div class='todo' data-id=${todo.id || todo.editedToDo[0].id}>
     <h3 class='todo-text'>${todo.name}</h3>
-      <input type="checkbox" class="mark-complete">
+      <input type="checkbox" class="mark-complete" style="cursor: pointer;">
       <button class='delete-button'>Delete</button>
       <button class='edit-button'>Edit</button>
     </div>
@@ -54,18 +54,18 @@ $(document).ready(function () {
     todo = todoElement.data("todo");
 
     console.log("delete");
-    $("#overlay, #confirmationModal").fadeIn();
-    $(".complete-question").hide();
-    $(".delete-question").show();
+    $("#overlay, #deleteConfirmationModal").fadeIn();
+    // $(".complete-question").hide();
+    // $(".delete-question").show();
 
     // Handle close button click
-    $("#closeButton, #cancelButton").on("click", function () {
+    $("#delete-closeButton, #delete-cancelButton").on("click", function () {
       // Close the modal and uncheck checkbox
-      $("#overlay, #confirmationModal").fadeOut();
+      $("#overlay, #deleteConfirmationModal").fadeOut();
     });
 
     // Handle confirm button click
-    $("#confirmButton").on("click", function () {
+    $("#delete-confirmButton").off("click").on("click", function () {
       const todoId = todoElement.data("id");
 
       $.ajax({
@@ -75,6 +75,8 @@ $(document).ready(function () {
         .done((data) => {
           console.log("delete todo", data);
           todoElement.remove();
+          $("#overlay, #deleteConfirmationModal").fadeOut(0.1);
+          $loadTodos();
         })
         .fail((jqXHR, textStatus, errorThrown) => {
           if (jqXHR.status === 404) {
@@ -163,7 +165,7 @@ $(document).ready(function () {
     );
 
     //Handle confirm button click
-    $("#editCategory-confirmButton").on("click", function () {
+    $("#editCategory-confirmButton").on("click", function() {
       if (newCategoryId === undefined || newCategoryId === null) {
         console.log("Please select a category.");
       } else {
@@ -262,21 +264,21 @@ $(document).ready(function () {
 
     if (this.checked) {
       // Show the modal when the checkbox is checked
-      $("#overlay, #confirmationModal").fadeIn();
-      $(".complete-question").show();
-      $(".delete-question").hide();
+      $("#overlay, #completeConfirmationModal").fadeIn();
+      // $(".complete-question").show();
+      // $(".delete-question").hide();
     }
   });
 
   // Handle close button click
-  $("#closeButton, #cancelButton").on("click", function () {
+  $("#complete-closeButton, #complete-cancelButton").on("click", function () {
     // Close the modal and uncheck checkbox
     $(".mark-complete").prop("checked", false);
-    $("#overlay, #confirmationModal").fadeOut();
+    $("#overlay, #completeConfirmationModal").fadeOut();
   });
 
   //Handle confirm button click
-  $("#confirmButton").on("click", function () {
+  $("#complete-confirmButton").on("click", function () {
     const todoId = todoElement.data("id");
 
     todo.is_complete = true;
@@ -287,7 +289,7 @@ $(document).ready(function () {
     })
       .done((data) => {
         // Close the modal
-        $("#overlay, #confirmationModal").fadeOut(0.1);
+        $("#overlay, #completeConfirmationModal").fadeOut(0.1);
         $loadTodos();
       })
       .fail((jqXHR, textStatus, errorThrown) => {
