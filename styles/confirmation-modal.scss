@@ -34,7 +34,6 @@ input[type=checkbox] {
 }
 
 .modal-content {
-    // background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -42,14 +41,14 @@ input[type=checkbox] {
     width: 100%;
     text-align: center;
     background-color: rgba(255, 255, 255, 1);
-}
 
-.close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    cursor: pointer;
+    .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
 }
 
 .modal-header {
@@ -58,27 +57,37 @@ input[type=checkbox] {
 
 .modal-body {
     margin-bottom: 20px;
+    max-height: 200px;
+
+    .form-control {
+        height: 35px;
+        width: 180px;
+    }
 }
 
 .modal-footer {
     display: flex;
     justify-content: space-evenly;
+
+    .cancel-button, .confirm-button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+    }
+
+    .cancel-button {
+        background-color: #ccc;
+    }
+    
+    .confirm-button {
+        background-color: #A4969B;
+        color: #fff;
+    }
 }
 
-.cancel-button,
-.confirm-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-}
-
-.cancel-button {
-    background-color: #ccc;
-}
-
-.confirm-button {
-    background-color: #A4969B;
-    color: #fff;
+#editCategoryModal {
+    width: 400px; 
+    height: 300px;
 }
