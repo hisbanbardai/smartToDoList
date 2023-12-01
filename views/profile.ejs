@@ -22,8 +22,13 @@
   <title>User Profile</title>
 </head>
 <body>
+
   <%- include('partials/_navBar') %>
-  <h1 class="page-title">Update Profile</h1>
+
+  <div class="flex">
+    <h1 class="page-title">Update Profile</h1>
+  </div>
+
   <form method="POST" action="/users/<%= user.id %>" class="user-form">
     <div class="m-3">
       <div class="form-group">
@@ -43,5 +48,6 @@
       <button type="submit" class="user-button">Update</button>
     </div>
   </form>
+
 </body>
 </html>

@@ -14,8 +14,13 @@
   <title>Login</title>
 </head>
 <body>
+
   <%- include('partials/_navBar') %>
-  <h1 class="page-title">Login</h1>
+
+  <div class="flex">
+    <h1 class="page-title">Login</h1>
+  </div>
+
   <form method="POST" action="/login" class="user-form">
     <div class="m-3">
       <div class="form-group">
@@ -31,5 +36,6 @@
       <button type="submit" class="user-button">Login</button>
     </div>
   </form>
+  
 </body>
 </html>

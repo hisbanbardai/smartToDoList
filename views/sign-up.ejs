@@ -14,8 +14,12 @@
   <title>Register</title>
 </head>
 <body>
+
   <%- include('partials/_navBar') %>
-  <h1 class="page-title">Create Account</h1>
+
+  <div class="flex">
+    <h1 class="page-title">Create Account</h1>
+  </div>
 
   <form method="POST" action="/sign-up" class="user-form">
     <div class="m-3">
@@ -36,5 +40,6 @@
       <button type="submit" class="user-button">Sign Up</button>
     </div>
   </form>
+  
 </body>
 </html>
