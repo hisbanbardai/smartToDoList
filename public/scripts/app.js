@@ -32,7 +32,7 @@ $(document).ready(function () {
     const element = `
     <div class='todo' data-id=${todo.id || todo.editedToDo[0].id}>
     <h3 class='todo-text'>${todo.name}</h3>
-      <input type="checkbox" class="mark-complete">
+      <input type="checkbox" class="mark-complete" style="cursor: pointer;">
       <button class='delete-button'>Delete</button>
       <button class='edit-button'>Edit</button>
     </div>
