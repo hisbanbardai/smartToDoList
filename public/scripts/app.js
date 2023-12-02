@@ -27,11 +27,18 @@ $(document).ready(function () {
     console.log(response);
   };
 
+   // Define an escape function to safely escape HTML content
+    const escape = function(str) {
+    let div = document.createElement("div");
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  };
+
   const createToDoElement = function (todo) {
     console.log(todo);
     const element = `
     <div class='todo' data-id=${todo.id || todo.editedToDo[0].id}>
-    <h3 class='todo-text'>${todo.name}</h3>
+    <h3 class='todo-text'>${escape(todo.name)}</h3>
       <input type="checkbox" class="mark-complete" style="cursor: pointer;">
       <div class='todo-function-button'>
       <button class='delete-button'>Delete</button>
@@ -41,14 +48,6 @@ $(document).ready(function () {
     `;
     return $(element).data("todo", todo);
   };
-
-
-  // Define an escape function to safely escape HTML content
-  // const escape = function(str) {
-  //   let div = document.createElement("div");
-  //   div.appendChild(document.createTextNode(str));
-  //   return div.innerHTML;
-  // };
 
   //Function to delete a todo
   $(".todo-main-container").on("click", ".delete-button", function (event) {
