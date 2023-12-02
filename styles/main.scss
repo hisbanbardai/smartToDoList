@@ -63,16 +63,11 @@ body {
       width: 20%;
       min-height: 600px;
       align-items: center;
-      // background-color: #C4CAD0;
-
 
       .todo-list {
         display: flex;
         flex-direction: column;
         border-bottom: 1px solid #77685D;
-        // background-color: #b4afab;
-        // border: 10px 20px;
-
       }
 
       #eat-todo-list, #read-todo-list, #watch-todo-list, #buy-todo-list {
@@ -86,7 +81,6 @@ body {
         border: 1px solid rgba(164, 150, 155, 0.1);
         border-radius: 10px;
         margin: 10px;
-        // background-color: rgba(252, 247, 255, 0.4);
         background-color: rgba(164, 150, 155, 0.2);
 
 
@@ -113,29 +107,3 @@ body {
   }
 }
 
-
-
-  
-
-
-
-  // @media (min-width:760px) {
-
-  // }
-
-
-
-  @media (max-width:759px) {
-
-    main {
-      display: flex;
-      flex-direction: column;
-    }
-    
-    
-    .category {
-      display: flex;
-      flex-direction: row;
-    }
-
-  }
