@@ -11,3 +11,11 @@ div.error-message {
   font-weight: bold;
   text-align: center;
 }
+
+.error-message::before {
+  content: "\f071"; /* Unicode for the exclamation-triangle icon in Font Awesome */
+  font-family: 'Font Awesome 5 Free';
+  margin-right: 10px; 
+  color: #cc0033; 
+  font-size: 18px;
+}
